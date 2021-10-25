@@ -1,11 +1,14 @@
 module.exports = (sequelize, type) => {
-    return sequelize.define('sensor', {
+    const sensor = sequelize.define('sensor', {
         ESN:{
-            type: type.INTEGER,
-            primaryKey: true
+            type: type.STRING(16),
+            primaryKey: true,
+            allowNull: false
         },
         model: type.STRING,
         name: type.STRING,
         location: type.STRING
     });
+
+    return sensor
 }
