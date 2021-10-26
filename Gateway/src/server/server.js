@@ -1,0 +1,3 @@
+class BaseServer{
+    startServer(port) {}
+}
