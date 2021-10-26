@@ -5,11 +5,22 @@ Obligatorio de Arquitectura de Software
 docker run -d --name mysqldb -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root mysql:latest
 
 # Obtener sensres por id:
-http://localhost:3000/api/sensors/ESN
+GET http://localhost:3000/catalog/sensors/ESN
 
-ejemplo: http://localhost:3000/api/sensors/1
+ejemplo: GET http://localhost:3000/catalog/sensors/S1
 
 # Obtener todos los sensores:
-http://localhost:3000/api/sensors
+GET http://localhost:3000/catalog/sensors
 
-ejemplo: http://localhost:3000/api/sensors
+ejemplo: GET http://localhost:3000/catalog/sensors
+
+# Agregar senor:
+POST http://localhost:3000/catalog/sensors
+
+ejemplo: 
+curl --location --request POST 'localhost:3000/catalog/sensors/' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'ESN=S1' \
+--data-urlencode 'model=modelo' \
+--data-urlencode 'name=jdskldj' \
+--data-urlencode 'location=jkljlkklk'
