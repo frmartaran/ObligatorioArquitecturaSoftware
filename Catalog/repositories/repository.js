@@ -13,9 +13,9 @@ const sequelize = new Sequelize(db.databaseName, db.username,db.password,{
 })
 
 const Sensor = SensorModel(sequelize, Sequelize)
-const Obs = ObsModel(sequelize, Sequelize)
+const Properties = ObsModel(sequelize, Sequelize)
 
-Sensor.hasMany(Obs) 
+Sensor.hasMany(Properties) 
 
 sequelize.sync({ force: false}).then(() => {
     console.log('tablas sincronizadas')
@@ -23,5 +23,5 @@ sequelize.sync({ force: false}).then(() => {
 
 module.exports= {
     Sensor,
-    Obs
+    Properties
 }
