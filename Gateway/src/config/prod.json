@@ -1,0 +1,5 @@
+{
+    "BASE_URL": "https://127.0.0.1:9090",
+    "OBSERVATIONS_QUEUE_NAME":"observations_queue",
+    "CACHE_GETTER":"prod"
+}
