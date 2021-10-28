@@ -1,6 +1,6 @@
-
+const sender = require('../../../../services/piplineSender')
 const postData = async (req,res,next) => {
-    console.log('Entro al post')
+    sender.sendData(req.body)
     res.send()
 };
 

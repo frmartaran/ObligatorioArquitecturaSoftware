@@ -1,5 +1,5 @@
 {
     "BASE_URL": "Dummy",
-    "OBSERVATIONS_QUEUE_NAME":"Mock",
+    "OBSERVATIONS_QUEUE_NAME":"observations_test_queue",
     "CACHE_GETTER":"development"
 }
