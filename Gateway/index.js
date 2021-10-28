@@ -10,4 +10,3 @@ if(serverKey){
 }else{
     console.log('no serverKey in env')
 }
-
