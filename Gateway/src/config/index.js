@@ -20,5 +20,3 @@ switch (NODE_ENV){
 Object.assign(config,configEnv)
 
 module.exports = config
-
-/*    */
