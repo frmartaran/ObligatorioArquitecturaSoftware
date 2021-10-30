@@ -2,10 +2,10 @@ const config = require('../../../config')
 
 //Bulk with buffer?
 class MockCli{
-    validateSensorSingle = async (sensorID) =>{
-        if (sensorID == 1){
+    getSensorSingle = async (sensorID) =>{
+        if (sensorID >= 1 && sensorID <= 10){
                 return true;
-        }else if (sensorID > 1){
+        }else if (sensorID > 10){
                 return false;            
         }else {
             return new Error("Error getting sensor")
