@@ -3,7 +3,7 @@ const config = require('../../../config')
 
 //Bulk with buffer?
 class AxiosCli{
-    validateSensorSingle = async (sensorID) =>{
+    getSensorSingle = async (sensorID) =>{
         const url = config.BASE_URL+`/sensors/${{sensorID}}`
         const response = axios.get(url)
         return response

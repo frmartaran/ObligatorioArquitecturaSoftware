@@ -1,22 +1,15 @@
 const sender = require('../../../../services/piplineSender')
-const tmp = require('../../../../services/apiCli')
-const client = tmp.getClient()
-const postData = async (req,res,next) => {
-    const sensorID = 1;
-    client.validateSensorSingle(sensorID)
-    .then(
-            (result)=>{
-                if(result){
-                    sender.sendData(req.body)
-                }
-            }
-        )
-    .catch(
-        (err)=>{
-            console.log(err)
-            next(err)
+const validator = require('../../../../services/validator')
+const postData = async (req,res) => {
+    const sensorESN = req.query.ESN || req.headers.ESN;
+    validator.validateSingleSensor(sensorESN).then((result)=>{
+        console.log(`Found result: ${result}`);
+        if(result){
+            let sensorData=req.body
+            // sensorData.properties = result.properties
+            sender.sendData(sensorData)
         }
-    )
+    })
     res.send();
 };
 
