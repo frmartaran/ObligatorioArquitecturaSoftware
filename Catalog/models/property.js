@@ -1,7 +1,7 @@
 module.exports = (sequelize, type) => {
-    const obsProp = sequelize.define('properties', {
+    const property = sequelize.define('property', {
         //sensorId: type.STRING(16),
-        observationName:{
+        Name:{
             type: type.STRING(16),
             primaryKey: true,
             allowNull: false
@@ -9,5 +9,5 @@ module.exports = (sequelize, type) => {
         unity: type.STRING,
     });
 
-    return obsProp
+    return property
 }
