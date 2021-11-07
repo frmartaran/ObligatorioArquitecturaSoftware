@@ -1,53 +1,46 @@
-const Sequelize = require('sequelize')
-const SensorModel = require('../model/sensor')
-const ObsModel = require('../model/properties')
+const Sequelize = require('sequelize');
+const SensorReadingModel = require('../model/sensorReading');
+const SensorMeasurementModel = require('../model/sensorMeasurement');
+const CatalogUnitModel = require('../model/catalogUnit');
 
    
-const Config = require('../config/config.json');
-const db = Config.database
+const Config = require('../config/default.json');
+const db = Config.database;
 
 
 const sequelize = new Sequelize(db.databaseName, db.username,db.password,{
     host: db.host,
     dialect: db.dialect
-})
+});
 
-const Sensor = SensorModel(sequelize, Sequelize)
-const Properties = ObsModel(sequelize, Sequelize)
+const sensorReading = SensorReadingModel(sequelize, Sequelize);
+const sensorMeasurement = SensorMeasurementModel(sequelize, Sequelize);
+const catalogUnit = CatalogUnitModel(sequelize, Sequelize);
 
-Sensor.hasMany(Properties) 
+sensorReading.hasMany(sensorMeasurement, {
+	as: 'sensorMeasurement',
+	foreignKey: 'sensorReadingESN'
+});
+sensorMeasurement.belongsTo(sensorReading, {
+	as: 'sensorReading',
+	foreignKey: 'sensorReadingESN'
+});
+
+sensorReading.hasMany(catalogUnit, {
+	as: 'catalogUnit',
+	foreignKey: 'sensorReadingESN'
+});
+catalogUnit.belongsTo(sensorReading, {
+	as: 'sensorReading',
+	foreignKey: 'sensorReadingESN'
+});
 
 sequelize.sync({ force: false}).then(() => {
     console.log('tablas sincronizadas')
 })
 
 module.exports= {
-    Sensor,
-    Properties
+    sensorReading,
+    sensorMeasurement,
+    catalogUnit
 }
-
-// {
-// 	ESN:”fruta”,
-// 	Nombre:”algo”,
-// 	location:”jkdsfjklsd”
-// 	date:”TIMESTAMP”
-// 	catalogProperties:[{
-// 		"observationName":”temperatura”,
-// 		"unit":”C”,
-// 	},
-//     {
-//     		"observationName":”Humidity”,
-//     		"unit":”HP”,
-//     }],
-//     sensorProperties:{
-//     		Name: "temperature"
-//             Value: 26.09,
-//     		unit:”F”
-//             },
-//            {
-//     		Name: "humidity"
-//     Value: 12.09,
-//     		unit:”HP”
-//            }
-//     	}
-//     }

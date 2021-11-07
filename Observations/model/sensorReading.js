@@ -1,7 +1,7 @@
 module.exports = (sequelize, type) => {
     const sensorReading = sequelize.define('sensorReading', {
         ESN:{
-            type: type.STRING(16),
+            type: type.UUID,
             primaryKey: true,
             allowNull: false
         },
@@ -9,7 +9,7 @@ module.exports = (sequelize, type) => {
         location: type.STRING,
         date: {
             type: 'TIMESTAMP',
-            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+            defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
             allowNull: false
         }
     });

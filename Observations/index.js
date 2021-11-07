@@ -14,4 +14,4 @@ app.listen(
     () => console.log(`Start listening on port http://localhost:${port}`)
 );
 
-measurementsQueue.process(8, './processes/measurementsProcessor');
+measurementsQueue.process(16, __dirname +'/processes/measurementsProcessor.js');
