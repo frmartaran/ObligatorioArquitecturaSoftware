@@ -1,4 +1,4 @@
-const Repository = require('./repository')
+const Repository = require('./mysqlRepository')
 
 const SensorReadingRepository = {
     Add: async (data) => {

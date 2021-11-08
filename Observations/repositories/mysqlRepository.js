@@ -1,12 +1,10 @@
 const Sequelize = require('sequelize');
 const SensorReadingModel = require('../model/sensorReading');
 const SensorMeasurementModel = require('../model/sensorMeasurement');
-const CatalogUnitModel = require('../model/catalogUnit');
-
-   
+const CatalogUnitModel = require('../model/catalogUnit');  
 const Config = require('../config/default.json');
-const db = Config.database;
 
+const db = Config.database;
 
 const sequelize = new Sequelize(db.databaseName, db.username,db.password,{
     host: db.host,

@@ -6,6 +6,7 @@ const app = express();
 
 const port = process.env.PORT;
 const measurementsQueue = new Queue('measurements');
+const incomingReadingDataQueue = new Queue('incomingReadingData');
 
 app.use('/observations', router);
 
@@ -14,4 +15,5 @@ app.listen(
     () => console.log(`Start listening on port http://localhost:${port}`)
 );
 
-measurementsQueue.process(16, __dirname +'/processes/measurementsProcessor.js');
+measurementsQueue.process(8, __dirname +'/processes/measurementsProcessor.js');
+incomingReadingDataQueue.process(8, __dirname +'/processes/readingDatabaseProcessor.js');
