@@ -5,7 +5,6 @@ const authorizationService = {
     
     AdminAuthorization: async (req) => {
         let token = req.headers["authorization"]
-        console.log(token)
         let response = {
             status: 200,
           message: "Ok"
@@ -18,8 +17,6 @@ const authorizationService = {
                 }
             }else{
                 if(decoded["rol"] === "Admin"){
-                    console.log("rol")
-                    console.log(decoded["rol"])
                     response = {
                         status: 200,
                       message: "Ok"
