@@ -1,30 +1,36 @@
 const tmp = require('../apiCli')
 const client = tmp.getClient()
+const {
+    getSensor,
+    refresh,
+    checkCache
+} = require('../../data_access')
 
-const cache = require('../../data_access')
-
-function validateSingleSensor(sensorESN){
+const validateSingleSensor = async (sensorESN) =>{
     try{
-        let result = cache.getSensor(sensorESN)
-        .then((cacheResult)=>
-        {
-            if (cacheResult){
-                cache.refresh(sensorESN,cacheResult);
-                return cacheResult;
-            }
-            else{
-                let apiResult = client.getSensorSingle(sensorESN)
-                .then((apiResponse)=>{
-                    if(apiResponse){
-                        cache.refresh(sensorESN,apiResponse)
-                        return apiResponse;
-                    }else{
-                        return null;
-                    }
-                })
-                return apiResult;
-            }
-        });
+        let result
+        let useCache = checkCache()
+        if(useCache){
+            result = await getSensor(sensorESN)
+                if(result){
+                    let parsed = JSON.parse(result)
+                    refresh(sensorESN,parsed)
+                    return (parsed)
+                }  
+        }
+        console.log(`Cache: ${result}`)
+        if(!result){
+            apiResponse = await client.getSensorSingle(sensorESN);
+            if(apiResponse){
+                console.log(`API: ${apiResponse}`)        
+                refresh(sensorESN,apiResponse)
+                result = apiResponse;
+            }else{
+                console.log(`API: ${apiResponse}`)        
+                result = null;
+            }  
+        }
+        console.log(`Final: ${result}`)
         return new Promise((resv,rej)=>{resv(result)})
     }
     catch(err){

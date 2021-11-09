@@ -1,13 +1,26 @@
 const config = require('../config')
 const redis = require('redis')
+const promisify = require('util.promisify')
 const client = redis.createClient(config.REDIS_PORT)
+client.on('connect',()=>{console.log('connected to redis')})
+client.on('error',(err)=>{console.log(`Error ${err.message}`)})
 const TTL = 3600
 
-function getSensor(sensorESN) {
+function checkCache(){
+    try{        
+        return client.ping()
+    }
+    catch(err){
+        return false
+    }
+}
+
+const getSensor = async (sensorESN) => {
     try{
-        return new Promise((resv,rej) =>{
-            client.get(sensorESN,(err,reply)=>{resv(reply)})
-        })
+        const get = promisify(client.get).bind(client)
+        const value = await get(sensorESN)
+        console.log(`Value: ${value}`)
+        return value
     }catch(err){
         console.log(err)
         return null
@@ -15,7 +28,8 @@ function getSensor(sensorESN) {
 }
 
 const refresh = async (sensorESN,data) =>{
-    client.setex(sensorESN,TTL,data);
+    const json = JSON.stringify(data)
+    client.setex(sensorESN,TTL,json);
 }
 
-module.exports = {getSensor,refresh}
+module.exports = {getSensor,refresh,checkCache}
