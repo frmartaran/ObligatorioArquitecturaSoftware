@@ -6,13 +6,7 @@ const {
     checkCache
 } = require('../../data_access')
 
-<<<<<<< HEAD
-const {getSensor,refresh,checkCache} = require('../../data_access')
-
-const validateSingleSensor = async (sensorESN)=>{
-=======
 const validateSingleSensor = async (sensorESN) =>{
->>>>>>> origin/develop
     try{
         let result
         let useCache = checkCache()
