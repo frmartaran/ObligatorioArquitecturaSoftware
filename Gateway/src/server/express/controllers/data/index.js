@@ -10,6 +10,7 @@ const postData = async (req,res) => {
             sender.sendData(sensorData)
         }
     })
+    res.status(201)
     res.send();
 };
 

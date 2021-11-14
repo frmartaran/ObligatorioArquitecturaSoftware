@@ -19,7 +19,6 @@ const getSensor = async (sensorESN) => {
     try{
         const get = promisify(client.get).bind(client)
         const value = await get(sensorESN)
-        console.log(`Value: ${value}`)
         return value
     }catch(err){
         console.log(err)

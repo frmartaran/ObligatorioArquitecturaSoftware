@@ -1,5 +1,5 @@
 {
     "BASE_URL": "Dummy",
-    "OBSERVATIONS_QUEUE_NAME":"observations_test_queue",
+    "OBSERVATIONS_QUEUE_NAME":"incomingReadingData_test",
     "CACHE_GETTER":"development"
 }

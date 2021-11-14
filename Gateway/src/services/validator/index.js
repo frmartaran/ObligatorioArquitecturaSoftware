@@ -6,7 +6,13 @@ const {
     checkCache
 } = require('../../data_access')
 
+<<<<<<< HEAD
+const {getSensor,refresh,checkCache} = require('../../data_access')
+
+const validateSingleSensor = async (sensorESN)=>{
+=======
 const validateSingleSensor = async (sensorESN) =>{
+>>>>>>> origin/develop
     try{
         let result
         let useCache = checkCache()
@@ -21,10 +27,11 @@ const validateSingleSensor = async (sensorESN) =>{
         console.log(`Cache: ${result}`)
         if(!result){
             apiResponse = await client.getSensorSingle(sensorESN);
-            if(apiResponse){
-                console.log(`API: ${apiResponse}`)        
-                refresh(sensorESN,apiResponse)
-                result = apiResponse;
+            if(apiResponse.status == 200){
+                let data = apiResponse.data
+                console.log(`API: ${data}`)        
+                refresh(sensorESN,data)
+                result = data;
             }else{
                 console.log(`API: ${apiResponse}`)        
                 result = null;
