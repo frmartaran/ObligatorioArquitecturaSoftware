@@ -6,7 +6,7 @@ const postData = async (req,res) => {
     .then((result)=>{
         if(result){
             let sensorData=req.body
-            sensorData.properties = result.properties
+            sensorData.catalogProperties = result.properties
             sender.sendData(sensorData)
         }
     })
