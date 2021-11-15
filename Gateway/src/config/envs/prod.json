@@ -1,5 +1,5 @@
 {
     "BASE_URL": "http://127.0.0.1:3000",
-    "OBSERVATIONS_QUEUE_NAME":"incomingReadingData",
+    "OBSERVATIONS_QUEUE_NAME":"measurements",
     "CACHE_GETTER":"prod"
 }

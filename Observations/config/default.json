@@ -2,7 +2,7 @@
 {
     "database": {
       "username": "root",
-      "password": "alo141",
+      "password": "root",
       "databaseName": "observations",
       "host": "127.0.0.1",
       "dialect": "mysql",

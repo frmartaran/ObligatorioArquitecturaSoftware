@@ -4,7 +4,7 @@ const postData = async (req,res) => {
     const sensorESN = req.query.ESN || req.headers.ESN;
     validator.validateSingleSensor(sensorESN)
     .then((result)=>{
-        if(result && result.isValid){
+        if(result){
             let sensorData=req.body
             sensorData.properties = result.properties
             sender.sendData(sensorData)
