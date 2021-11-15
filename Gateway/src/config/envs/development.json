@@ -1,5 +1,4 @@
 {
     "BASE_URL": "Dummy",
-    "OBSERVATIONS_QUEUE_NAME":"measurements"
-
+    "OBSERVATIONS_QUEUE_NAME":"measurements_test"
 }
