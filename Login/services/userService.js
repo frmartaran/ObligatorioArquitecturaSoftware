@@ -8,10 +8,13 @@ const UserService = {
         let dbUser = await UserRepository.findById(name)
         
         if(dbUser != null && dbUser.password === password){
-            return true;
+            return dbUser;
         }
         return false;
     },
-
+    createUser: async (user) =>{
+        let dbUser = await UserRepository.add(user);
+        return dbUser;
+    }
 }
 module.exports = UserService

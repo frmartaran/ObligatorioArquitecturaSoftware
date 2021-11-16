@@ -5,7 +5,8 @@ module.exports = (sequelize, type) => {
             primaryKey: true,
             allowNull: false
         },
-        password: type.STRING
+        password: type.STRING,
+        role: type.STRING
     });
 
     return sensor
