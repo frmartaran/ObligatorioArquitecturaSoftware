@@ -24,7 +24,7 @@ const reading = new mongoose.Schema({
     sensorMeasurement: [sensorMeasurement]
 });
 
-const Reading = mongoose.model('Reading', reading);
+const Reading = mongoose.model('Reading', reading, 'reading');
 
 module.exports = {
     Reading

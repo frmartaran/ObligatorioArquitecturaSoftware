@@ -16,29 +16,22 @@ const sensorMeasurement = SensorMeasurementModel(sequelize, Sequelize);
 const catalogUnit = CatalogUnitModel(sequelize, Sequelize);
 
 sensorReading.hasMany(sensorMeasurement, {
-	as: 'sensorMeasurement',
-	foreignKey: 'sensorReadingESN'
+	as: 'sensorMeasurement'
 });
 sensorMeasurement.belongsTo(sensorReading, {
-	as: 'sensorReading',
-	foreignKey: 'sensorReadingESN'
+	as: 'sensorReading'
 });
 
 sensorReading.hasMany(catalogUnit, {
-	as: 'catalogUnit',
-	foreignKey: 'sensorReadingESN'
+	as: 'catalogUnit'
 });
 catalogUnit.belongsTo(sensorReading, {
-	as: 'sensorReading',
-	foreignKey: 'sensorReadingESN'
+	as: 'sensorReading'
 });
-
-sequelize.sync({ force: false}).then(() => {
-    console.log('tablas sincronizadas')
-})
 
 module.exports= {
     sensorReading,
     sensorMeasurement,
-    catalogUnit
+    catalogUnit,
+	sequelize
 }
