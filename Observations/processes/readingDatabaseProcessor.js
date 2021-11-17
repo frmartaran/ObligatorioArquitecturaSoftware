@@ -1,8 +1,8 @@
-const readingDatabaseRepository = require('../services/readingDatabaseService');
+const readingDatabaseService = require('../services/readingDatabaseService');
 
 readingDatabaseProcessor = (job) => {
     if(job.data.action === 'ADD'){
-        readingDatabaseRepository.Add(job.data.data);
+        readingDatabaseService.Add(job.data.data);
     }
     return Promise.resolve();
 }
