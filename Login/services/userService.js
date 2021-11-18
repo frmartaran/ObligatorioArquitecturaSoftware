@@ -1,4 +1,5 @@
 const UserRepository = require('../repositories/userRepository')
+const ExporterUserRepository = require('../repositories/exporterUserRepository')
 
 const UserService = {
 
@@ -12,8 +13,14 @@ const UserService = {
         }
         return false;
     },
-    createUser: async (user) =>{
-        let dbUser = await UserRepository.add(user);
+    createExporterUser: async (user) =>{
+        const currentDate = new Date()
+        user.consumeDate = currentDate.getTime()
+        let dbUser = await ExporterUserRepository.add(user);
+        return dbUser;
+    },
+    updateDateExporterUser: async (id,time) =>{
+        let dbUser = await ExporterUserRepository.update(id,time);
         return dbUser;
     }
 }
