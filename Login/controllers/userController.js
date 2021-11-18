@@ -17,26 +17,27 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/exporter', async (req, res) => {
     const user = req.body
-    let response = await userService.createUser(user)
+    let response = await userService.createExporterUser(user)
     if(response){
-        let token = createToken(response)
-        res.send(token)
+        let url = createURL(response)
+        res.send(url)
     }else{
         res.status(500)
-        res.send("no se pudo insertar el usuario")
+        res.send("no se pudo crear el usuario")
     }
 })
 
 function createToken(user){
     var payload = new Object();
     payload.rol = user.role;
-    if(user.createdAt){
-        payload.registered=user.createdAt;
-    }
     return token = jwt.sign(payload,"secret")
 }
 
+function createURL(user){
+    const url = `${process.env.BASE_URL}${process.env.EXPORTER_PORT}${process.env.EXPORTER_PATH}${user.id}`;
+    return url
+}
 
 module.exports = router
