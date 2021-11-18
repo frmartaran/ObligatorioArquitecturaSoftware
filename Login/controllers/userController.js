@@ -41,6 +41,16 @@ router.put('/exporter/:id', async (req, res) => {
     }
 })
 
+router.get('/exporter/consumeDate/:id', async (req, res) => {
+    const userID = req.params.id
+    let response = await userService.getConsumeDateExporterUser(userID)
+    if(response){
+        res.send(response.toString())
+    }else{
+        res.status(500)
+        res.send("no se pudo obtener el consumerDate del usuario")
+    }
+})
 
 function createToken(user){
     var payload = new Object();

@@ -22,6 +22,14 @@ const UserService = {
     updateDateExporterUser: async (id,time) =>{
         let dbUser = await ExporterUserRepository.update(id,time);
         return dbUser;
+    },
+    getConsumeDateExporterUser: async (id) =>{
+        let dbUser = await ExporterUserRepository.findById(id);
+        if(dbUser){
+            return dbUser.consumeDate;
+        }else{
+            return null
+        }
     }
 }
 module.exports = UserService
