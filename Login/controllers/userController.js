@@ -29,6 +29,19 @@ router.post('/exporter', async (req, res) => {
     }
 })
 
+router.put('/exporter/:id', async (req, res) => {
+    const userID = req.params.id
+    const newTimestamp = req.query.consumeDate
+    let response = await userService.updateDateExporterUser(userID,newTimestamp)
+    if(response){
+        res.send('acutalizado con exito')
+    }else{
+        res.status(500)
+        res.send("no se pudo actualizar el usuario")
+    }
+})
+
+
 function createToken(user){
     var payload = new Object();
     payload.rol = user.role;
