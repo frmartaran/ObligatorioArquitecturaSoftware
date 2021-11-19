@@ -7,5 +7,15 @@
       "host": "127.0.0.1",
       "dialect": "mysql",
       "operatorsAliases": 0
+    },
+    "originalWithCatalogProperty": {
+      "name": "originalWithCatalogProperty",
+      "port": 6379,
+      "host": "localhost"
+    },
+    "measurements": {
+      "name": "measurements",
+      "port": 6379,
+      "host": "localhost"
     }
 }

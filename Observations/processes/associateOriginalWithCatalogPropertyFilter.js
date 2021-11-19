@@ -1,5 +1,6 @@
-const Queue = require('bull');
-const originalWithCatalogPropertyQueue = new Queue('originalWithCatalogProperty');
+const queue = require('../queues/queue')
+
+const originalWithCatalogPropertyQueue = queue.originalWithCatalogPropertyQueue
 
 associateOriginalWithCatalogPropertyFilter = (job) => {
     let originalWithCatalogProperty = job.data
