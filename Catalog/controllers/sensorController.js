@@ -3,7 +3,7 @@ const sensorService = require('../services/sensorService')
 const authorizationService = require('../services/authorizationService')
 
 router.get('/', async (req, res) => {
-    const sensors = await sensorservice.findAll()
+    const sensors = await sensorService.findAll()
     res.send(sensors)
 })
 

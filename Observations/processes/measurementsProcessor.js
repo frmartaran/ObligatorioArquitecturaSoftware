@@ -4,6 +4,7 @@ const Queue = require('bull');
 const queue = new Queue('incomingReadingData');
 
 measurementsProcessor = (job) => {
+    console.log(job.data);
     sensorReadingService.Add(job.data);
     let incomingReadingData = {
         action: 'ADD',

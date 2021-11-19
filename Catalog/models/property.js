@@ -6,7 +6,7 @@ module.exports = (sequelize, type) => {
             primaryKey: true,
             allowNull: false
         },
-        unity: type.STRING,
+        unit: type.STRING,
     });
 
     return property
