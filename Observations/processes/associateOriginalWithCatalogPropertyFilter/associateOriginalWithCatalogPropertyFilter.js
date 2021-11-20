@@ -1,4 +1,4 @@
-const queue = require('../queues/queue')
+const queue = require('../../queues/queue')
 
 const originalWithCatalogPropertyQueue = queue.originalWithCatalogPropertyQueue
 

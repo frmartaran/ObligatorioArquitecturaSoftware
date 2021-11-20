@@ -17,5 +17,10 @@
       "name": "measurements",
       "port": 6379,
       "host": "localhost"
+    },
+    "filteredData": {
+      "name": "filteredData",
+      "port": 6379,
+      "host": "localhost"
     }
 }

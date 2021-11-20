@@ -19,7 +19,17 @@ const measurementsQueue = new Queue(
         } 
     });
 
+const filteredDataQueue = new Queue(
+    config.filteredData.name,
+    {redis: 
+        {
+            port:config.filteredData.port,
+            host:config.filteredData.host 
+        } 
+    });
+
 module.exports = {
     originalWithCatalogPropertyQueue,
-    measurementsQueue
+    measurementsQueue,
+    filteredDataQueue
 }

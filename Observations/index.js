@@ -4,8 +4,8 @@ const router = require('./controllers/router');
 const app = express();
 const queue = require('./queues/queue')
 
-const associateOriginalWithCatalogPropertyFilter = require('./processes/associateOriginalWithCatalogPropertyFilter')
-const unitTransforamtionFilter = require('./processes/unitTransforamtionFilter')
+const associateOriginalWithCatalogPropertyFilter = require('./processes/associateOriginalWithCatalogPropertyFilter/associateOriginalWithCatalogPropertyFilter')
+const unitTransforamtionFilter = require('./processes/unitTransforamtionFilter/unitTransforamtionFilter')
 
 const port = process.env.PORT;
 
