@@ -26,7 +26,9 @@ unitTransforamtionFilter = (job) => {
         const transformedData = {
             propertyName: data.propertyName,
             unit: data.finalUnit,
-            value: result
+            value: result,
+            min: data.min,
+            max: data.max
         }
         transformedDataList.push(transformedData)
     })

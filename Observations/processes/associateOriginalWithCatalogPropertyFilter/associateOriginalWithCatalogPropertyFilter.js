@@ -12,7 +12,9 @@ associateOriginalWithCatalogPropertyFilter = (job) => {
                     propertyName: properti.Name,
                     originalUnit: properti.unit,
                     finalUnit: catalogProp.unit,
-                    value: properti.Value
+                    value: properti.Value,
+                    min: catalogProp.sensorProperty.minUnitValue,
+                    max: catalogProp.sensorProperty.maxUnitValue,
                 }
                 asociatedDataList.push(asociatedData)
             }
