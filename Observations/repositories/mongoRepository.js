@@ -24,8 +24,20 @@ const reading = new mongoose.Schema({
     sensorMeasurement: [sensorMeasurement]
 });
 
+const dailyReading = new mongoose.Schema({
+    ESN: String,
+    date: Date,
+    sensorMeasurementName: String,
+    averageValue: Number
+});
+
+reading.index({ 'ESN': 1, 'date': 1, 'sensorMeasurement.name': 1 });
+
 const Reading = mongoose.model('Reading', reading, 'reading');
 
+const DailyReading = mongoose.model('DailyReading', dailyReading, 'dailyReading');
+
 module.exports = {
-    Reading
+    Reading,
+    DailyReading
 }
