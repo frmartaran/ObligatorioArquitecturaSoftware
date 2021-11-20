@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const UserModel = require('../models/user')
+const ExporterUserModel = require('../models/exporter_user')
    
 const Config = require('../config/config.json')
 const db = Config.database
@@ -11,11 +12,13 @@ const sequelize = new Sequelize(db.databaseName, db.username,db.password,{
 })
 
 const User = UserModel(sequelize, Sequelize)
+const ExporterUser = ExporterUserModel(sequelize, Sequelize)
 
 sequelize.sync({ force: false}).then(() => {
     console.log('tablas sincronizadas')
 })
 
 module.exports= {
-    User
+    User,
+    ExporterUser
 }
