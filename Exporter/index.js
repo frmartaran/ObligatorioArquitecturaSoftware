@@ -6,6 +6,7 @@ const router = require('./src/routes')
 
 app.use(express.json())
 app.use(router)
+
 const port = process.env.PORT
 console.log(port)
 app.listen(port,()=>{

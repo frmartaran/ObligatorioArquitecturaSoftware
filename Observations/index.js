@@ -1,11 +1,16 @@
 require('dotenv').config();
 const express = require('express');
 const router = require('./controllers/router');
+const Repository = require('./repositories/mysqlRepository');
 const app = express();
 const queue = require('./queues/queue')
 
 const associateOriginalWithCatalogPropertyFilter = require('./processes/associateOriginalWithCatalogPropertyFilter/associateOriginalWithCatalogPropertyFilter')
 const unitTransforamtionFilter = require('./processes/unitTransforamtionFilter/unitTransforamtionFilter')
+
+Repository.sequelize.sync({ force: false}).then(() => {
+    console.log('tablas sincronizadas')
+});
 
 const port = process.env.PORT;
 

@@ -1,8 +1,13 @@
 module.exports = (sequelize, type) => {
     const sensorReading = sequelize.define('sensorReading', {
-        ESN:{
-            type: type.UUID,
+        id: {
+            type: type.INTEGER,
             primaryKey: true,
+            allowNull: false,
+            autoIncrement: true
+        },
+        ESN:{
+            type: type.STRING(16),
             allowNull: false
         },
         name: type.STRING,
