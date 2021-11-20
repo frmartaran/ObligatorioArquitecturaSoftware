@@ -24,18 +24,6 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
-    let response = await authorizationService.AdminAuthorization(req)
-    if(response.status === 200){
-        const sensor = await sensorService.Delete(req.params.id)
-        res.send(sensor)
-    }else{
-        res.status(response.status)
-        res.send(response.message)
-    }
-
-})
-
 router.post('/:sensorId', async (req, res) => {
     let response = await authorizationService.AdminAuthorization(req)
     if(response.status === 200){
@@ -43,6 +31,18 @@ router.post('/:sensorId', async (req, res) => {
         const property = req.body
         const sensorProperty = await sensorService.AddProperty(sensorId, property)
         res.send(sensorProperty)
+    }else{
+        res.status(response.status)
+        res.send(response.message)
+    }
+
+})
+
+router.delete('/:id', async (req, res) => {
+    let response = await authorizationService.AdminAuthorization(req)
+    if(response.status === 200){
+        const sensor = await sensorService.Delete(req.params.id)
+        res.send(sensor)
     }else{
         res.status(response.status)
         res.send(response.message)

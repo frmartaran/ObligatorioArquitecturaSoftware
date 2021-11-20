@@ -27,7 +27,9 @@ const SensorService = {
         const propertyName = property.Name
         const data = {
             sensorESN: sensorId,
-            propertyName: propertyName
+            propertyName: propertyName,
+            minUnitValue: property.minUnitValue,
+            maxUnitValue: property.maxUnitValue
         }
         let newSensor = await SensorpropertiesRepository.Add(data)
         return newSensor
