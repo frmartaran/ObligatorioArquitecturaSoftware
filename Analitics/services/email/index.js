@@ -1,12 +1,12 @@
 const nodemailer = require('nodemailer')
 var fs = require('fs');
 
-var name = "Test"
-var sensor_ESN = "Test sensor"
-var propertyParam = "Temp"
-var email = "d.baccino@outlook.com"
+const credentials = {
+    user: "OblArqui2021@gmail.com",
+    pass: "Arqui2021"
+}
 const sendEmail = async (params) =>{
-    const transporter = createTransport()
+    const transporter = createTransport(credentials)
     const mailOptions = createMailOptions(params)
     transporter.sendMail(mailOptions,(error,info)=>{
         if(error){
