@@ -14,8 +14,6 @@ Repository.sequelize.sync({ force: false}).then(() => {
 
 const port = process.env.PORT;
 
-//const incomingReadingDataQueue = new Queue('incomingReadingData');
-
 app.use('/observations', router);
 
 app.listen(
@@ -25,3 +23,11 @@ app.listen(
 
 queue.measurementsQueue.process(8, associateOriginalWithCatalogPropertyFilter);
 queue.originalWithCatalogPropertyQueue.process(8, unitTransforamtionFilter);
+queue.filteredDataQueue.process(8, __dirname +'/processes/measurementsProcessor.js')
+
+queue.incomingReadingDataQueue.process(8, __dirname +'/processes/readingDatabaseProcessor.js');
+
+queue.dailyReadingsQueue.add({}, { repeat: { cron: '24 11 * * *' } });
+
+queue.dailyReadingsQueue.process(__dirname +'/processes/dailyReadingsProcessor.js');
+

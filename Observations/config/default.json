@@ -22,5 +22,15 @@
       "name": "filteredData",
       "port": 6379,
       "host": "localhost"
+    },
+    "incomingReadingData": {
+      "name": "incomingReadingData",
+      "port": 6379,
+      "host": "localhost"
+    },
+    "dailyReadingsQueue": {
+      "name": "dailyReadingsQueue",
+      "port": 6379,
+      "host": "localhost"
     }
 }

@@ -8,7 +8,7 @@ unitTransforamtionFilter = (job) => {
     const transformedDataList = []
     let transformation = {
         ESN: job.data.ESN,
-        Nombre: job.data.Nombre,
+        Nombre: job.data.name,
         location: job.data.location,
         date: job.data.date,
         properties: job.data.asociatedData
