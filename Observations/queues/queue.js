@@ -43,11 +43,20 @@ const dailyReadingsQueue = new Queue(
             host:config.dailyReadingsQueue.host 
         } 
     });
+const pendingValidationQueue = new Queue(
+    config.pendingValidationQueue.name,
+    {redis: 
+        {
+            port:config.pendingValidationQueue.port,
+            host:config.pendingValidationQueue.host 
+        } 
+    });
 
 module.exports = {
     originalWithCatalogPropertyQueue,
     measurementsQueue,
     filteredDataQueue,
     incomingReadingDataQueue,
-    dailyReadingsQueue
+    dailyReadingsQueue,
+    pendingValidationQueue
 }

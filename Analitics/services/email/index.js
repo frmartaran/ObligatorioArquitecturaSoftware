@@ -1,8 +1,13 @@
 const nodemailer = require('nodemailer')
 var fs = require('fs');
 
+const credentials = {
+    user: "OblArqui2021@gmail.com",
+    pass: "Arqui2021"
+}
+
 const sendEmail = async (params) =>{
-    const transporter = createTransport()
+    const transporter = createTransport(credentials)
     const mailOptions = createMailOptions(params)
     transporter.sendMail(mailOptions,(error,info)=>{
         if(error){
