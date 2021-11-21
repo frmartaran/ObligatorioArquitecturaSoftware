@@ -1,4 +1,6 @@
 const nodemailer = require('nodemailer')
+var fs = require('fs');
+
 var name = "Test"
 var sensor_ESN = "Test sensor"
 var propertyParam = "Temp"
@@ -24,9 +26,9 @@ function createTransport(gmailInfo){
         userParam = gmailInfo.user
         passParam = gmailInfo.pass
     }else{
-        hostParam = 'smtp.ethereal.email' 
-        userParam = 'ulices.gerhold8@ethereal.email'
-        passParam = 'fhpJX8Bh9nycX3Ydyz'
+        hostParam = 'smtp.ethereal.email'
+        userParam = process.env.ETHEREAL_USER
+        passParam = process.env.ETHEREAL_PASS
     }
 
     const transporter = nodemailer.createTransport({
@@ -41,11 +43,24 @@ function createTransport(gmailInfo){
 }
 
 function createMailOptions(params){
+    var emails = JSON.parse(fs.readFileSync(__dirname+'/receivers.json','utf8'))
+    var emailTo = emails.email
+    var key = 'email'
+    var index = 2
+    var tempEmail = "expectedEmail"
+    while(tempEmail){
+        tempEmail = emails[key+index];
+        if(tempEmail){
+            emailTo +=','
+            emailTo += tempEmail
+            index++
+        }
+    }
     const mailOptions = {
         from: 'Analytics',
-        to: email,
+        to: emailTo,
         subject: 'Sensor en Alerta!!',
-        text:`${name},\n el sensor ${sensor_ESN} esta registrando valores anormales en la propiedad ${propertyParam}`
+        text:`Equipo!!,\n el sensor ${params.sensor_ESN} esta registrando valores anormales en la propiedad ${params.propertyParam}`
     }
     return mailOptions
 }
