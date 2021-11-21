@@ -31,4 +31,8 @@ const refresh = async (sensorESN,data) =>{
     client.setex(sensorESN,TTL,json);
 }
 
-module.exports = {getSensor,refresh,checkCache}
+const deleteKey = async (sensorESN) =>{
+    client.DEL(sensorESN);
+}
+
+module.exports = {getSensor,refresh,checkCache,deleteKey}

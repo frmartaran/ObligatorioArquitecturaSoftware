@@ -42,7 +42,7 @@ const SensorService = {
 
     DeleteSensorProperty: async (sensorId, propertyId) => {
         let sensorProperty = await SensorpropertiesRepository.findById(sensorId, propertyId)
-        let updateGateway = await SensorService.UpdateGateway(sensorId, 'DELETE')
+        let updateGateway = await SensorService.UpdateGateway(sensorId, 'UPDATE')
         return await SensorpropertiesRepository.Delete(sensorProperty)
     },
 

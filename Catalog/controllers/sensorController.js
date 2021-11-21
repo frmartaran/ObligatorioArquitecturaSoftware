@@ -55,7 +55,7 @@ router.delete('/:sensorId/property/:propertyName', async (req, res) => {
     if(response.status === 200){
         const sensorId = req.params.sensorId
         const propertyName = req.params.propertyName
-        const sensorProperty = await sensorservice.DeleteSensorProperty(sensorId, propertyName)
+        const sensorProperty = await sensorService.DeleteSensorProperty(sensorId, propertyName)
         res.send(sensorProperty)
     }else{
         res.status(response.status)
