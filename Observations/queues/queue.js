@@ -27,9 +27,27 @@ const filteredDataQueue = new Queue(
             host:config.filteredData.host 
         } 
     });
+const incomingReadingDataQueue = new Queue(
+    config.incomingReadingData.name,
+    {redis: 
+        {
+            port:config.incomingReadingData.port,
+            host:config.incomingReadingData.host 
+        } 
+    });
+const dailyReadingsQueue = new Queue(
+    config.dailyReadingsQueue.name,
+    {redis: 
+        {
+            port:config.dailyReadingsQueue.port,
+            host:config.dailyReadingsQueue.host 
+        } 
+    });
 
 module.exports = {
     originalWithCatalogPropertyQueue,
     measurementsQueue,
-    filteredDataQueue
+    filteredDataQueue,
+    incomingReadingDataQueue,
+    dailyReadingsQueue
 }

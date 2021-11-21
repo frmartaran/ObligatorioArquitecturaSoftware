@@ -5,10 +5,10 @@ const SensorReadingRepository = {
         var query = Repository.sensorReading.create(data, {
             include: [
                 {
-                    association: Repository.sensorReading.associations.catalogUnit,
+                    association: Repository.sensorReading.associations.properties,
                 },
                 {
-                    association: Repository.sensorReading.associations.sensorMeasurement,
+                    association: Repository.sensorReading.associations.transformedData,
                 },
             ]
         });

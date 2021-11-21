@@ -5,27 +5,46 @@ mongoose.connect('mongodb://127.0.0.1:27017/test', {
     serverSelectionTimeoutMS: 3600,
 });
 
-const catalogUnit = new mongoose.Schema({
-    observationName: String,
-    unit: String
+const properties = new mongoose.Schema({
+    propertyName: String,
+    originalUnit: String,
+    finalUnit: String,
+    value: Number,
+    min: Number,
+    max: Number
 });
 
-const sensorMeasurement = new mongoose.Schema({
-    name: String,
+const transformedData = new mongoose.Schema({
+    propertyName: String,
     unit: String,
-    value: Number
+    value: Number,
+    min: Number,
+    max: Number
 });
 
 const reading = new mongoose.Schema({
     ESN: String,
+    name: String,
     location: String,
     date: Date,
-    catalogUnit: [catalogUnit],
-    sensorMeasurement: [sensorMeasurement]
+    properties: [properties],
+    transformedData: [transformedData]
 });
+
+const dailyReading = new mongoose.Schema({
+    ESN: String,
+    date: Date,
+    sensorMeasurementName: String,
+    averageValue: Number
+});
+
+reading.index({ 'ESN': 1, 'date': 1, 'properties.finalUnit': 1 });
 
 const Reading = mongoose.model('Reading', reading, 'reading');
 
+const DailyReading = mongoose.model('DailyReading', dailyReading, 'dailyReading');
+
 module.exports = {
-    Reading
+    Reading,
+    DailyReading
 }
