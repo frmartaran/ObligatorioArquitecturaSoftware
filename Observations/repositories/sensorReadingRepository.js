@@ -1,6 +1,9 @@
 const Repository = require('./mysqlRepository')
 
 const SensorReadingRepository = {
+    Sync: () => {
+        Repository.sequelize.sync({ force: false});
+    },
     Add: async (data) => {
         var query = Repository.sensorReading.create(data, {
             include: [

@@ -1,16 +1,14 @@
 require('dotenv').config();
 const express = require('express');
 const router = require('./controllers/router');
-const Repository = require('./repositories/mysqlRepository');
+const sensorReadingService = require('./services/sensorReadingService');
 const app = express();
 const queue = require('./queues/queue')
 
 const associateOriginalWithCatalogPropertyFilter = require('./processes/associateOriginalWithCatalogPropertyFilter/associateOriginalWithCatalogPropertyFilter')
 const unitTransforamtionFilter = require('./processes/unitTransforamtionFilter/unitTransforamtionFilter')
 
-Repository.sequelize.sync({ force: false}).then(() => {
-    console.log('tablas sincronizadas')
-});
+sensorReadingService.Sync();
 
 const port = process.env.PORT;
 
