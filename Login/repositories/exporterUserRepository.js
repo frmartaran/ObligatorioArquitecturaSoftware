@@ -1,40 +1,40 @@
 const Repository = require('./repository')
-
+const { handleInfraError } = require('../../ErrorHandler/infra_error')
+const prefixMethod = "ExporterUserRepository"
 const ExporterUserRepository = {
 
     findById: async (id) => {
-        try{
+        try {
             var query = Repository.ExporterUser.findOne({ where: { id: id } });
             let user = await query;
             return user;
-        }catch(err){
-            console.log(err)
-            return null
+        } catch (err) {
+            handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Find By ID`, message: err.message, payload: id })
         }
     },
-    add: async (data) =>{
+    add: async (data) => {
         let result = null;
-        try{
+        try {
             var query = Repository.ExporterUser.create(data);
             var newUser = await query;
             result = newUser
-        }catch(err){
-            console.log(err);
+        } catch (err) {
+            handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Add exporter user`, message: err.message, payload: JSON.stringify(data) })
         }
-        finally{
+        finally {
             return result;
         }
     },
-    update: async (id,time) =>{
+    update: async (id, time) => {
         let result = null;
-        try{
-            var query = Repository.ExporterUser.update({consumeDate: time},{where:{ id: id}});
+        try {
+            var query = Repository.ExporterUser.update({ consumeDate: time }, { where: { id: id } });
             var newUser = await query;
             result = newUser
-        }catch(err){
-            console.log(err);
+        } catch (err) {
+            handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Update`, message: err.message, payload: `UserID:${id}, Timestamp: ${time}` })
         }
-        finally{
+        finally {
             return result;
         }
     }

@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
+const { handleInfraError } = require('../../ErrorHandler/infra_error')
 
 mongoose.connect('mongodb://127.0.0.1:27017/test', {
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 36000,
+}).then(()=>console.log('Connected to mongo!')).catch((err)=>{
+    handleInfraError({ app: process.env.APP_NAME, method: 'Init Mongo DB', message: err.message})
 });
 
 const properties = new mongoose.Schema({

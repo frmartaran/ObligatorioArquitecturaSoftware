@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const SensorModel = require('../models/sensor')
 const PropertyModel = require('../models/property')
-   
+const {handleInfraError}=require('../../ErrorHandler/infra_error')   
 const Config = require('../config/config.json')
 const db = Config.database
 
@@ -38,6 +38,10 @@ Property.belongsToMany(Sensor, { through: SensorProperty })
 sequelize.sync({ force: false}).then(() => {
     console.log('tablas sincronizadas')
 })
+.catch((err)=>{
+    handleInfraError({ app: process.env.APP_NAME, method: 'Init DB', message: err.message })
+})
+
 
 module.exports= {
     Sensor,

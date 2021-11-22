@@ -3,7 +3,7 @@ const SensorReadingModel = require('../model/sensorReading');
 const TransformedDataModel = require('../model/transformedData');
 const PropertiesModel = require('../model/properties');  
 const Config = require('../config/default.json');
-
+const {handleInfraError} = require('../../ErrorHandler/infra_error') //usar en el sync
 const db = Config.database;
 
 const sequelize = new Sequelize(db.databaseName, db.username,db.password,{

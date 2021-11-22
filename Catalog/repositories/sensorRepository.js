@@ -1,32 +1,49 @@
 const Repository = require('./repository')
-
+const { handleInfraError } = require('../../ErrorHandler/infra_error')
+const prefixMethod = "SensorRepository"
 
 const SensorRepository = {
-    
+
     findAll: async () => {
-        var query = Repository.Sensor.findAll({ include: Repository.Property });
-        let sensors = await query;
-        return sensors;
+        try {
+            var query = Repository.Sensor.findAll({ include: Repository.Property });
+            let sensors = await query;
+            return sensors;
+        }
+        catch (err) {
+            handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Find All`, message: err.message })
+        }
     },
 
     findById: async (id) => {
-        var query = Repository.Sensor.findOne({ where: { ESN: id },include: Repository.Property });
-        let sensors = await query;
-
-        return sensors;
+        try {
+            var query = Repository.Sensor.findOne({ where: { ESN: id }, include: Repository.Property });
+            let sensors = await query;
+            return sensors;
+        } catch (err) {
+            handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Find By ID`, message: err.message, payload: id })
+        }
     },
 
     Add: async (data) => {
-        var query = Repository.Sensor.create(data)
-        var newSensor = await query
-        return newSensor
+        try {
+            var query = Repository.Sensor.create(data)
+            var newSensor = await query
+            return newSensor
+        } catch (err) {
+            handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Add`, message: err.message, payload:JSON.stringify(data) })
+        }
     },
 
     Delete: async (id) => {
-        var query = Repository.Sensor.findOne({ where: { ESN: id },include: Repository.Property });
-        let sensors = await query;
-        await sensors.destroy()
-        return "deleted"
+        try {
+            var query = Repository.Sensor.findOne({ where: { ESN: id }, include: Repository.Property });
+            let sensors = await query;
+            await sensors.destroy()
+            return "deleted"
+        } catch (err) {
+            handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Delete`, message: err.message })
+        }
     },
 }
 module.exports = SensorRepository

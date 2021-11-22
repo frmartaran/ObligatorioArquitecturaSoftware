@@ -12,6 +12,7 @@ router.get('/:id', async (req, res) => {
     res.send(sensors)
 })
 
+
 router.post('/', async (req, res) => {
     let response = await authorizationService.AdminAuthorization(req)
     if(response.status === 200){
