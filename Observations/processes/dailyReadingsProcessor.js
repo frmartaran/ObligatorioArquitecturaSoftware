@@ -12,7 +12,7 @@ dailyReadingsProcessor = async (job) => {
         startDate.setUTCHours(0,0,0,0);
         let endDate = yesterday;
         endDate.setUTCHours(23,59,59,999);
-        let dailyReadings = await readingDatabaseService.GetDailyReadings(startDate, endDate);
+        let dailyReadings = await readingDatabaseService.GetDailyReadingsFromRawData(startDate, endDate);
         await readingDatabaseService.AddDailyReadings(dailyReadings);
     } else{
         console.log('promedio ya calculado');

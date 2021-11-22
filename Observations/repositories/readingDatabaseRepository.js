@@ -5,30 +5,158 @@ const readingDatabaseRepository = {
         const reading = new Repository.Reading(data);
         return reading.save();
     },
-    Get: (dateFrom) => {
+    AddManyReadings: async (data) => {
+        const reading = Repository.Reading.insertMany(data);
+        return reading;
+    },
+    Get: (dateFrom, pageLength) => {
         let query = Repository.Reading.find({
             "date": {
-                "$gte": dateFrom
+                "$gt": dateFrom
             }
-        });
+        }, {'_id': 0, 
+            '__v': 0, 
+            'sensorMeasurement._id': 0, 
+            'catalogUnit._id': 0
+        })
+        .sort({'date': 1})
+        .limit(pageLength);
         return query;
     },
     GetLastDailyDate: async () => {
         let query = Repository.DailyReading.find({}).sort({'date': -1}).limit(1);
         return query;
     },
-    GetDailyReadings: async (startDate, endDate) => {
+    GetDailyReadingsFromRawData: async (startDate, endDate) => {
         let query = Repository.Reading.aggregate([
-            { $match: { date: { $gte: startDate, $lt: endDate }}},
+            { $match: { date: { $gte: startDate, $lte: endDate }}},
             { $sort: { ESN: 1, date: 1}},
             { $unwind : "$sensorMeasurement" },
-            { $group: { _id:{ESN: "$ESN", sensorMeasurementName: "$sensorMeasurement.name", yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$date" }}}, averageValue: {$avg:"$sensorMeasurement.value"}}},
-            { $project: { _id: 0, ESN: "$_id.ESN", sensorMeasurementName: "$_id.sensorMeasurementName", date: startDate, averageValue: 1}}
+            { $group: 
+                { 
+                    _id: {
+                        ESN: "$ESN", 
+                        sensorMeasurementName: "$sensorMeasurement.name", 
+                        yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$date" }}, 
+                        date: "$date"
+                    }, 
+                    totalSumValues: {$sum: "$sensorMeasurement.value"},
+                    totalCountValues: {$sum: 1}
+                }
+            },
+            { $project: { 
+                _id: 0, 
+                ESN: "$_id.ESN", 
+                sensorMeasurementName: "$_id.sensorMeasurementName", 
+                date: "$_id.date", 
+                averageValue: { $divide: [ "$totalSumValues", "$totalCountValues" ]}, 
+                totalSumValues: 1, 
+                totalCountValues: 1
+            }}
+        ]);
+        return query;
+    },
+    GetSensorDailyReadingsFromRawDataByMeasurementType: async (startDate, endDate, measurementType, ESN) => {
+        let query = Repository.Reading.aggregate([
+            { $match: { ESN: ESN, date: { $gte: startDate, $lte: endDate } }},
+            { $unwind : "$sensorMeasurement"},
+            { $match: { 'sensorMeasurement.name': measurementType }},
+            { $group: 
+                { 
+                    _id: {yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$date" }}, date: "$date"}, 
+                    totalSumValues: {$sum: "$sensorMeasurement.value"},
+                    totalCountValues: {$sum: 1}
+                }
+            },
+            { $project: { _id: 0, date: "$_id.date", averageValue: { $divide: [ "$totalSumValues", "$totalCountValues" ]}}}
+        ]);
+        return query;
+    },
+    GetSensorMonthlyReadingsFromRawDataByMeasurementType: async (startDate, endDate, measurementType, ESN) => {
+        let query = Repository.Reading.aggregate([
+            { $match: { ESN: ESN, date: { $gte: startDate, $lte: endDate } }},
+            { $unwind : "$sensorMeasurement"},
+            { $match: { 'sensorMeasurement.name': measurementType }},
+            { $group: 
+                { 
+                    _id: {month: {$month: "$date"}, year: {$year: "$date"}}, 
+                    totalSumValues: {$sum: "$sensorMeasurement.value"},
+                    totalCountValues: {$sum: 1}
+                }
+            },
+            { $project: { _id: 0, month: "$_id.month", year: "$_id.year", totalSumValues: 1, totalCountValues: 1}}
+        ]);
+        return query;
+    },
+    GetSensorYearlyReadingsFromRawDataByMeasurementType: async (startDate, endDate, measurementType, ESN) => {
+        let query = Repository.Reading.aggregate([
+            { $match: { ESN: ESN, date: { $gte: startDate, $lte: endDate } }},
+            { $unwind : "$sensorMeasurement"},
+            { $match: { 'sensorMeasurement.name': measurementType }},
+            { $group: 
+                { 
+                    _id: {year: {$year: "$date"}}, 
+                    totalSumValues: {$sum: "$sensorMeasurement.value"},
+                    totalCountValues: {$sum: 1}
+                }
+            },
+            { $project: { _id: 0, year: "$_id.year", totalSumValues: 1, totalCountValues: 1}}
+        ]);
+        return query;
+    },
+    GetSensorDailyReadingsByMeasurementType: async (startDate, endDate, measurementType, ESN) => {
+        let query = Repository.DailyReading.find({
+            "ESN": ESN,
+            "sensorMeasurementName": measurementType,
+            "date": {
+                $gte: startDate,
+                $lte: endDate
+            }
+        }, {'_id': 0, 'ESN': 0, 'sensorMeasurementName': 0, 'totalSumValues': 0, 'totalCountValues': 0, '__v': 0});
+        return query;
+    },
+    GetSensorMonthlyReadingsByMeasurementType: async (startDate, endDate, measurementType, ESN) => {
+        let query = Repository.DailyReading.aggregate([
+            { $match: { ESN: ESN, sensorMeasurementName: measurementType, date: { $gte: startDate, $lte: endDate }}},
+            { $group: 
+                { 
+                    _id: {month: {$month: "$date"}, year: {$year: "$date"}}, 
+                    totalSumValues: {$sum: "$totalSumValues"},
+                    totalCountValues: {$sum: "$totalCountValues"}
+                }
+            },
+            { $project: { 
+                _id: 0, 
+                month: "$_id.month", 
+                year: "$_id.year", 
+                averageValue: { $divide: [ "$totalSumValues", "$totalCountValues" ]}, 
+                totalSumValues: 1, 
+                totalCountValues: 1}
+            }
+        ]);
+        return query;
+    },
+    GetSensorYearlyReadingsByMeasurementType: async (startDate, endDate, measurementType, ESN) => {
+        let query = Repository.DailyReading.aggregate([
+            { $match: { ESN: ESN, sensorMeasurementName: measurementType, date: { $gte: startDate, $lte: endDate }}},
+            { $group: 
+                { 
+                    _id: {year: {$year: "$date"}}, 
+                    totalSumValues: {$sum: "$totalSumValues"},
+                    totalCountValues: {$sum: "$totalCountValues"}
+                }
+            },
+            { $project: { 
+                _id: 0, 
+                year: "$_id.year", 
+                averageValue: { $divide: [ "$totalSumValues", "$totalCountValues" ]}, 
+                totalSumValues: 1, 
+                totalCountValues: 1}
+            }
         ]);
         return query;
     },
     AddDailyReadings: async (data) => {
-        console.log(data);
         const reading = Repository.DailyReading.insertMany(data);
         return reading;
     },
