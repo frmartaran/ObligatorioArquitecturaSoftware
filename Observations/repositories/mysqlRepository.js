@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const SensorReadingModel = require('../model/sensorReading');
-const SensorMeasurementModel = require('../model/sensorMeasurement');
-const CatalogUnitModel = require('../model/catalogUnit');  
+const TransformedDataModel = require('../model/transformedData');
+const PropertiesModel = require('../model/properties');  
 const Config = require('../config/default.json');
 
 const db = Config.database;
@@ -12,26 +12,26 @@ const sequelize = new Sequelize(db.databaseName, db.username,db.password,{
 });
 
 const sensorReading = SensorReadingModel(sequelize, Sequelize);
-const sensorMeasurement = SensorMeasurementModel(sequelize, Sequelize);
-const catalogUnit = CatalogUnitModel(sequelize, Sequelize);
+const transformedData = TransformedDataModel(sequelize, Sequelize);
+const properties = PropertiesModel(sequelize, Sequelize);
 
-sensorReading.hasMany(sensorMeasurement, {
-	as: 'sensorMeasurement'
+sensorReading.hasMany(transformedData, {
+	as: 'transformedData'
 });
-sensorMeasurement.belongsTo(sensorReading, {
+transformedData.belongsTo(sensorReading, {
 	as: 'sensorReading'
 });
 
-sensorReading.hasMany(catalogUnit, {
-	as: 'catalogUnit'
+sensorReading.hasMany(properties, {
+	as: 'properties'
 });
-catalogUnit.belongsTo(sensorReading, {
+properties.belongsTo(sensorReading, {
 	as: 'sensorReading'
 });
 
 module.exports= {
     sensorReading,
-    sensorMeasurement,
-    catalogUnit,
+    transformedData,
+    properties,
 	sequelize
 }

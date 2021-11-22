@@ -2,26 +2,33 @@ const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://127.0.0.1:27017/test', {
     useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 3600,
+    serverSelectionTimeoutMS: 36000,
 });
 
-const catalogUnit = new mongoose.Schema({
-    observationName: String,
-    unit: String
+const properties = new mongoose.Schema({
+    propertyName: String,
+    originalUnit: String,
+    finalUnit: String,
+    value: Number,
+    min: Number,
+    max: Number
 });
 
-const sensorMeasurement = new mongoose.Schema({
-    name: String,
+const transformedData = new mongoose.Schema({
+    propertyName: String,
     unit: String,
-    value: Number
+    value: Number,
+    min: Number,
+    max: Number
 });
 
 const reading = new mongoose.Schema({
     ESN: String,
+    name: String,
     location: String,
     date: Date,
-    catalogUnit: [catalogUnit],
-    sensorMeasurement: [sensorMeasurement]
+    properties: [properties],
+    transformedData: [transformedData]
 });
 
 const dailyReading = new mongoose.Schema({
@@ -33,7 +40,7 @@ const dailyReading = new mongoose.Schema({
     totalCountValues: Number
 });
 
-reading.index({ 'ESN': 1, 'date': 1, 'sensorMeasurement.name': 1 });
+reading.index({ 'ESN': 1, 'date': 1, 'properties.finalUnit': 1 });
 
 dailyReading.index({ 'ESN': 1, 'date': 1, 'sensorMeasurementName': 1 });
 

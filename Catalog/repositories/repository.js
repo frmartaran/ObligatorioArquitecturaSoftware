@@ -27,7 +27,9 @@ const SensorProperty = sequelize.define('sensorProperty', {
           model: Property, 
           key: 'Name'
         }
-      }
+      },
+      minUnitValue: Sequelize.INTEGER,
+      maxUnitValue: Sequelize.INTEGER
 })
 
 Sensor.belongsToMany(Property, { through: SensorProperty })

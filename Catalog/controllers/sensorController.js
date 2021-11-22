@@ -3,7 +3,7 @@ const sensorService = require('../services/sensorService')
 const authorizationService = require('../services/authorizationService')
 
 router.get('/', async (req, res) => {
-    const sensors = await sensorservice.findAll()
+    const sensors = await sensorService.findAll()
     res.send(sensors)
 })
 
@@ -24,18 +24,6 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
-    let response = await authorizationService.AdminAuthorization(req)
-    if(response.status === 200){
-        const sensor = await sensorService.Delete(req.params.id)
-        res.send(sensor)
-    }else{
-        res.status(response.status)
-        res.send(response.message)
-    }
-
-})
-
 router.post('/:sensorId', async (req, res) => {
     let response = await authorizationService.AdminAuthorization(req)
     if(response.status === 200){
@@ -50,12 +38,24 @@ router.post('/:sensorId', async (req, res) => {
 
 })
 
+router.delete('/:id', async (req, res) => {
+    let response = await authorizationService.AdminAuthorization(req)
+    if(response.status === 200){
+        const sensor = await sensorService.Delete(req.params.id)
+        res.send(sensor)
+    }else{
+        res.status(response.status)
+        res.send(response.message)
+    }
+
+})
+
 router.delete('/:sensorId/property/:propertyName', async (req, res) => {
     let response = await authorizationService.AdminAuthorization(req)
     if(response.status === 200){
         const sensorId = req.params.sensorId
         const propertyName = req.params.propertyName
-        const sensorProperty = await sensorservice.DeleteServiceProperty(sensorId, propertyName)
+        const sensorProperty = await sensorService.DeleteSensorProperty(sensorId, propertyName)
         res.send(sensorProperty)
     }else{
         res.status(response.status)

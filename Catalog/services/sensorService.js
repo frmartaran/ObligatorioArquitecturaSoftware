@@ -1,5 +1,6 @@
 const SensorRepository = require('../repositories/sensorRepository')
 const SensorpropertiesRepository = require('../repositories/sensorPropertiesRepository')
+const sensorToQueue = require('../processes/sensorToQueue')
 
 const SensorService = {
     
@@ -20,6 +21,7 @@ const SensorService = {
 
     Delete: async (id) => {
         let sensors = await SensorRepository.Delete(id)
+        let updateGateway = await SensorService.UpdateGateway(sensorId, 'DELETE')
         return sensors
     },
 
@@ -27,15 +29,30 @@ const SensorService = {
         const propertyName = property.Name
         const data = {
             sensorESN: sensorId,
-            propertyName: propertyName
+            propertyName: propertyName,
+            minUnitValue: property.minUnitValue,
+            maxUnitValue: property.maxUnitValue
         }
+
         let newSensor = await SensorpropertiesRepository.Add(data)
+        let updateGateway = await SensorService.UpdateGateway(sensorId, 'UPDATE')
+
         return newSensor
     },
 
-    DeleteServiceProperty: async (sensorId, propertyId) => {
+    DeleteSensorProperty: async (sensorId, propertyId) => {
         let sensorProperty = await SensorpropertiesRepository.findById(sensorId, propertyId)
+        let updateGateway = await SensorService.UpdateGateway(sensorId, 'UPDATE')
         return await SensorpropertiesRepository.Delete(sensorProperty)
     },
+
+    UpdateGateway: async (sensorId, action) => {
+        let sensor = await SensorService.findById(sensorId)
+        const send = {
+            action: action,
+            sensor: sensor
+        }
+        return await sensorToQueue(send)
+    }
 }
 module.exports = SensorService

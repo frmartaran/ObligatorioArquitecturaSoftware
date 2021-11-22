@@ -8,5 +8,35 @@
       "dialect": "mysql",
       "operatorsAliases": 0
     },
-    "pageLength": 200
+    "pageLength": 200,
+    "originalWithCatalogProperty": {
+      "name": "originalWithCatalogProperty",
+      "port": 6379,
+      "host": "localhost"
+    },
+    "measurements": {
+      "name": "measurements",
+      "port": 6379,
+      "host": "localhost"
+    },
+    "filteredData": {
+      "name": "filteredData",
+      "port": 6379,
+      "host": "localhost"
+    },
+    "incomingReadingData": {
+      "name": "incomingReadingData",
+      "port": 6379,
+      "host": "localhost"
+    },
+    "dailyReadingsQueue": {
+      "name": "dailyReadingsQueue",
+      "port": 6379,
+      "host": "localhost"
+    },
+    "pendingValidationQueue": {
+      "name": "pendingValidation",
+      "port": 6379,
+      "host": "localhost"
+    }
 }

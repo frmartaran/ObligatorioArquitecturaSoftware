@@ -1,4 +1,9 @@
 {
     "REDIS_PORT":6379,
-    "REDIS_HOST":"localhost"
+    "REDIS_HOST":"localhost",
+    "updateSensor": {
+      "name": "updateSensor",
+      "port": 6379,
+      "host": "localhost"
+    }
 }
