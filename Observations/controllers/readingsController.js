@@ -41,7 +41,8 @@ module.exports = class ReadingsController {
         if(differenceInDays > 365){
             res.send("Error. La diferencia entre fechas es muy grande para el promedio diario.")
         }else {
-            let dailyReadingsByMeasurementType = await readingDatabaseService.GetSensorDailyReadingsByMeasurementType(dateFrom, dateTo, measurementType, ESN);            let lastDateInDailyReadings = await readingDatabaseService.GetLastDailyDate();
+            let dailyReadingsByMeasurementType = await readingDatabaseService.GetSensorDailyReadingsByMeasurementType(dateFrom, dateTo, measurementType, ESN);            
+            let lastDateInDailyReadings = await readingDatabaseService.GetLastDailyDate();
             if(this.compareLastDailyDateWithToDate(dateTo, lastDateInDailyReadings)){
                 let dayFromTodayReading = this.getDayFromTodayReading(lastDateInDailyReadings[0].date);
                 let todayReadings = await readingDatabaseService.GetSensorDailyReadingsFromRawDataByMeasurementType(dayFromTodayReading, dateTo, measurementType, ESN);
