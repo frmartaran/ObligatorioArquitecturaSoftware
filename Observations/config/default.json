@@ -6,7 +6,23 @@
       "databaseName": "observations",
       "host": "127.0.0.1",
       "dialect": "mysql",
-      "operatorsAliases": 0
+      "operatorsAliases": 0,
+      "dialectOptions": {
+        "connectTimeout": 36000000
+      },
+      "pool": {
+        "max": 16,
+        "min": 0,
+        "idle": 36000000,
+        "acquire": 36000000
+      }
+    },
+    "mongoDb": {
+      "uri": "mongodb://127.0.0.1:27017/test",
+      "options": {
+        "useUnifiedTopology": true,
+        "serverSelectionTimeoutMS": 36000000
+      }
     },
     "pageLength": 200,
     "originalWithCatalogProperty": {

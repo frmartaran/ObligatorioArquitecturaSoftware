@@ -6,13 +6,9 @@ const app = express();
 const queue = require('./queues/queue');
 const config = require('./config/default.json');
 
-const associateOriginalWithCatalogPropertyFilter = require('./processes/associateOriginalWithCatalogPropertyFilter/associateOriginalWithCatalogPropertyFilter');
-const unitTransforamtionFilter = require('./processes/unitTransforamtionFilter/unitTransforamtionFilter');
-const filteredDataProcessor = require('./processes/filteredDataProcessor.js');
-const readingDatabaseProcessor = require('./processes/readingDatabaseProcessor.js');
-const dailyReadingsProcessor = require('./processes/dailyReadingsProcessor.js');
-
-sensorReadingService.Sync();
+(async () => {
+    await sensorReadingService.Sync();
+})();
 
 const port = process.env.PORT;
 
@@ -23,11 +19,10 @@ app.listen(
     () => console.log(`Start listening on port http://localhost:${port}`)
 );
 
-queue.measurementsQueue.process(8, associateOriginalWithCatalogPropertyFilter);
-queue.originalWithCatalogPropertyQueue.process(8, unitTransforamtionFilter);
-queue.filteredDataQueue.process(8, filteredDataProcessor);
-queue.incomingReadingDataQueue.process(8, readingDatabaseProcessor);
+queue.measurementsQueue.process(8, __dirname + '/processes/associateOriginalWithCatalogPropertyFilter/associateOriginalWithCatalogPropertyFilter.js');
+queue.originalWithCatalogPropertyQueue.process(8, __dirname + '/processes/unitTransforamtionFilter/unitTransforamtionFilter.js');
+queue.filteredDataQueue.process(8, __dirname + '/processes/filteredDataProcessor.js');
+queue.incomingReadingDataQueue.process(8, __dirname + '/processes/readingDatabaseProcessor.js');
 
 queue.dailyReadingsQueue.add({}, { repeat: config.dailyProcessorCronExpression });
-queue.dailyReadingsQueue.process(dailyReadingsProcessor);
-
+queue.dailyReadingsQueue.process(__dirname + '/processes/dailyReadingsProcessor.js');

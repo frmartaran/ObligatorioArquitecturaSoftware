@@ -8,7 +8,9 @@ const db = Config.database;
 
 const sequelize = new Sequelize(db.databaseName, db.username,db.password,{
     host: db.host,
-    dialect: db.dialect
+    dialect: db.dialect,
+    dialectOptions: db.dialectOptions,
+    pool: db.pool
 });
 
 const sensorReading = SensorReadingModel(sequelize, Sequelize);

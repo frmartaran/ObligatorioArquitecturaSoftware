@@ -44,7 +44,7 @@ module.exports = class ReadingsController {
             let dailyReadingsByMeasurementType = await readingDatabaseService.GetSensorDailyReadingsByMeasurementType(dateFrom, dateTo, measurementType, ESN);            
             let lastDateInDailyReadings = await readingDatabaseService.GetLastDailyDate();
             if(this.compareLastDailyDateWithToDate(dateTo, lastDateInDailyReadings)){
-                let dayFromTodayReading = this.getDayFromTodayReading(lastDateInDailyReadings[0].date);
+                let dayFromTodayReading = this.getDayFromTodayReading(lastDateInDailyReadings[0]?.date, dateFrom);
                 let todayReadings = await readingDatabaseService.GetSensorDailyReadingsFromRawDataByMeasurementType(dayFromTodayReading, dateTo, measurementType, ESN);
                 dailyReadingsByMeasurementType = dailyReadingsByMeasurementType.concat(todayReadings);
             };
@@ -59,7 +59,7 @@ module.exports = class ReadingsController {
             let monthlyReadingsByMeasurementType = await readingDatabaseService.GetSensorMonthlyReadingsByMeasurementType(dateFrom, dateTo, measurementType, ESN);
             let lastDateInDailyReadings = await readingDatabaseService.GetLastDailyDate();
             if(this.compareLastDailyDateWithToDate(dateTo, lastDateInDailyReadings)){
-                let dayFromTodayReading = this.getDayFromTodayReading(lastDateInDailyReadings[0].date);
+                let dayFromTodayReading = this.getDayFromTodayReading(lastDateInDailyReadings[0]?.date, dateFrom);
                 let todayMonthlyReadings = await readingDatabaseService.GetSensorMonthlyReadingsFromRawDataByMeasurementType(dayFromTodayReading, dateTo, measurementType, ESN);
                 todayMonthlyReadings.forEach(reading => {
                     let todayMonth = monthlyReadingsByMeasurementType?.find(monthlyReading => monthlyReading.month === reading.month && monthlyReading.year === reading.year);
@@ -88,7 +88,7 @@ module.exports = class ReadingsController {
         let yearlyReadingsByMeasurementType = await readingDatabaseService.GetSensorYearlyReadingsByMeasurementType(dateFrom, dateTo, measurementType, ESN);
         let lastDateInDailyReadings = await readingDatabaseService.GetLastDailyDate();
         if(this.compareLastDailyDateWithToDate(dateTo, lastDateInDailyReadings)){
-            let dayFromTodayReading = this.getDayFromTodayReading(lastDateInDailyReadings[0].date);
+            let dayFromTodayReading = this.getDayFromTodayReading(lastDateInDailyReadings[0]?.date, dateFrom);
             let todayYearlyReadings = await readingDatabaseService.GetSensorYearlyReadingsFromRawDataByMeasurementType(dayFromTodayReading, dateTo, measurementType, ESN);
             todayYearlyReadings.forEach(reading => {
                 let todayYear = yearlyReadingsByMeasurementType?.find(yearlyReading => yearlyReading.year === reading.year);
@@ -112,17 +112,26 @@ module.exports = class ReadingsController {
     };
 
     compareLastDailyDateWithToDate = (dateTo, lastDateInDailyReadings) => {
-        let dateToCompare = new Date(dateTo);
-        dateToCompare.setUTCHours(0,0,0,0);
-        return (lastDateInDailyReadings.length > 0 
-            && (dateToCompare.getYear() === lastDateInDailyReadings[0].date.getYear()
-            && dateToCompare.getDate() > lastDateInDailyReadings[0].date.getDate())
-            || dateToCompare.getYear() > lastDateInDailyReadings[0].date.getYear());
+        if(lastDateInDailyReadings.length > 0){
+            let dateToCompare = new Date(dateTo);
+            dateToCompare.setUTCHours(0,0,0,0);
+            return (lastDateInDailyReadings.length > 0 
+                && (dateToCompare.getYear() === lastDateInDailyReadings[0].date.getYear()
+                && dateToCompare.getDate() > lastDateInDailyReadings[0].date.getDate())
+                || dateToCompare.getYear() > lastDateInDailyReadings[0].date.getYear());
+        }else{
+            return true;
+        }
+
     }
 
-    getDayFromTodayReading = (dayFrom) => {
-        let dayFromTodayReading = new Date(dayFrom.setDate(new Date(dayFrom.getDate() + 1)));
-        dayFromTodayReading.setUTCHours(0,0,0,0);
-        return dayFromTodayReading;
+    getDayFromTodayReading = (lastDayInDailyReadings, dateFrom) => {
+        if(lastDayInDailyReadings){
+            let dayFromTodayReading = new Date(lastDayInDailyReadings.setDate(new Date(lastDayInDailyReadings.getDate() + 1)));
+            dayFromTodayReading.setUTCHours(0,0,0,0);
+            return dayFromTodayReading;
+        }else{
+            return dateFrom;
+        }
     }
 }

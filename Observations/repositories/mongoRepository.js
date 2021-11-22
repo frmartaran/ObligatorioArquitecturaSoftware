@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
+const Config = require('../config/default.json');
 
-mongoose.connect('mongodb://127.0.0.1:27017/test', {
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 36000,
-});
+const mongoDb = Config.mongoDb;
+
+mongoose.connect(mongoDb.uri, mongoDb.options);
 
 const properties = new mongoose.Schema({
     propertyName: String,
