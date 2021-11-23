@@ -8,16 +8,17 @@
         {
           "name": "temperature",
           "unit":"F",
-          "minUnitValue": 68,
-          "maxUnitValue": 86
+          "minUnitValue": 680,
+          "maxUnitValue": 860
         },
         {
           "name": "atm pressure",
-          "unit":"HP",
-          "minUnitValue": 68,
-          "maxUnitValue": 86
+          "unit":"PAS",
+          "minUnitValue": 506625,
+          "maxUnitValue": 1013250
         }
       ]
     },
-    "latencia":8000
+    "latencia":10000,
+    "daysBack": 0
 }

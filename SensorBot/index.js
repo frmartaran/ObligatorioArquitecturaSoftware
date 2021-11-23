@@ -1,4 +1,5 @@
 const sender = require('./sender')
+const moment = require('moment')
 var fs = require('fs');
 
 
@@ -8,7 +9,7 @@ async function recurse() {
     var configFile = JSON.parse(fs.readFileSync('./config/default.json', 'utf8'));
     var sensor = configFile.sensor
 
-    var json = createRequestJson(sensor)
+    var json = createRequestJson(configFile)
       
     console.log(json)
     let resp = sender.sender(json)
@@ -23,14 +24,21 @@ function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-function createRequestJson(sensor) { 
+function createRequestJson(configFile) { 
+  let sensor = configFile.sensor
   
+  let date = new Date()
+  
+  date = new Date(date.setDate(date.getDate()-configFile.daysBack));
+
+  let momentDate = moment(date).format('YYYY-MM-DD h:mm:ss')
+
   let requestProperties = createrequestProperties(sensor)
-  var json = {
+  let json = {
     "ESN":sensor.ESN,
     "name":sensor.name,
     "location": sensor.location,
-    "date":1636938049,
+    "date":momentDate,
     "properties": requestProperties
   }
   return json
