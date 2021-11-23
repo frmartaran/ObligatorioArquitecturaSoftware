@@ -2,14 +2,14 @@
 {
     "sensor": {
       "ESN": "S1",
-      "name": "Model 1",
+      "name": "Model X",
       "location": "10000-10000",
       "properties":[
         {
           "name": "temperature",
           "unit":"F",
-          "minUnitValue": 680,
-          "maxUnitValue": 860
+          "minUnitValue": 68,
+          "maxUnitValue": 86
         },
         {
           "name": "atm pressure",
@@ -19,6 +19,6 @@
         }
       ]
     },
-    "latencia":10000,
+    "latencia":1000,
     "daysBack": 0
 }
