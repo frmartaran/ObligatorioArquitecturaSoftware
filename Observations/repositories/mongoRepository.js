@@ -3,7 +3,9 @@ const Config = require('../config/default.json');
 
 const mongoDb = Config.mongoDb;
 
-mongoose.connect(mongoDb.uri, mongoDb.options);
+mongoose.connect(mongoDb.uri, mongoDb.options).then(()=>console.log('Connected to mongo!')).catch((err)=>{
+    handleInfraError({ app: process.env.APP_NAME, method: 'Init Mongo DB', message: err.message})
+});
 
 const properties = new mongoose.Schema({
     propertyName: String,

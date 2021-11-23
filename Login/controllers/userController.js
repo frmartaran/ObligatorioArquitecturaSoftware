@@ -47,7 +47,7 @@ router.get('/exporter/consumeDate/:id', async (req, res) => {
     if(response){
         res.send(response.toString())
     }else{
-        res.status(500)
+        res.status(400)
         res.send("no se pudo obtener el consumerDate del usuario")
     }
 })
