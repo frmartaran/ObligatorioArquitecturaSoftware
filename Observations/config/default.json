@@ -55,7 +55,5 @@
       "port": 6379,
       "host": "localhost"
     },
-    "dailyProcessorCronExpression:": { 
-      "cron": "24 11 * * *" 
-    }
+    "dailyProcessorCronExpression:": "53 23 * * *"
 }

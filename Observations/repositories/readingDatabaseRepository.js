@@ -52,8 +52,7 @@ const readingDatabaseRepository = {
                         _id: {
                             ESN: "$ESN", 
                             sensorMeasurementName: "$transformedData.propertyName", 
-                            yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$date" }}, 
-                            date: "$date"
+                            yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$date" }}
                         }, 
                         totalSumValues: {$sum: "$transformedData.value"},
                         totalCountValues: {$sum: 1}
@@ -63,7 +62,7 @@ const readingDatabaseRepository = {
                     _id: 0, 
                     ESN: "$_id.ESN", 
                     sensorMeasurementName: "$_id.sensorMeasurementName", 
-                    date: "$_id.date", 
+                    date: { $toDate: "$_id.yearMonthDay"},
                     averageValue: { $divide: [ "$totalSumValues", "$totalCountValues" ]}, 
                     totalSumValues: 1, 
                     totalCountValues: 1
@@ -82,12 +81,12 @@ const readingDatabaseRepository = {
                 { $match: { 'transformedData.propertyName': measurementType }},
                 { $group: 
                     { 
-                        _id: {yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$date" }}, date: "$date"}, 
+                        _id: {yearMonthDay: { $dateToString: { format: "%Y-%m-%d", date: "$date" }}}, 
                         totalSumValues: {$sum: "$transformedData.value"},
                         totalCountValues: {$sum: 1}
                     }
                 },
-                { $project: { _id: 0, date: "$_id.date", averageValue: { $divide: [ "$totalSumValues", "$totalCountValues" ]}}}
+                { $project: { _id: 0, date: { $toDate: "$_id.yearMonthDay"}, averageValue: { $divide: [ "$totalSumValues", "$totalCountValues" ]}}}
             ]);
             return query;
         } catch (err) {
