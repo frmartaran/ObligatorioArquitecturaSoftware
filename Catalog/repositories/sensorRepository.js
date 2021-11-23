@@ -45,5 +45,20 @@ const SensorRepository = {
             handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Delete`, message: err.message })
         }
     },
+    
+    Put: async (data, id) => {
+        try {
+            var query = Repository.Sensor.update(
+                { model: data.model, name: data.name, location: data.location},
+                { where: { ESN: id  } }
+              );
+            let newSensor = await query;
+            return newSensor
+        } catch (err) {
+            handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Add`, message: err.message, payload:JSON.stringify(data) })
+        }
+    },
 }
+
+
 module.exports = SensorRepository

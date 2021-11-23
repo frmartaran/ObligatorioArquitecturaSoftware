@@ -30,6 +30,19 @@ const sensorPropertiesRepository = {
         } catch (err) {
             handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Find By ID`, message: err.message, payload: sensorProperty })
         }
-    }
+    },
+
+    Put: async (data, sensorId, ropertyName) => {
+        try {
+            var query = Repository.SensorProperty.update(
+                { minUnitValue: data.minUnitValue, maxUnitValue: data.maxUnitValue},
+                { where: { sensorESN: sensorId,  propertyName: ropertyName} }
+              );
+            let newSensorPropety = await query;
+            return newSensorPropety
+        } catch (err) {
+            handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Add`, message: err.message, payload:JSON.stringify(data) })
+        }
+    },
 }
 module.exports = sensorPropertiesRepository
