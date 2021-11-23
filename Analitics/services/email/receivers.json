@@ -1,4 +1,9 @@
 {
-    "email": "d.baccino@outlook.com",
-    "email2": "enano.bacci@gmail.com"
+    "emails":["federlrpm@gmail.com",
+        "federlrpm@gmail.com"],
+    "senderHostParam":"smtp.gmail.com" ,
+    "senderUserParam":"OblArqui2021@gmail.com",
+    "senderPassParam":"Arqui2021",
+    "from":"Analytics",
+    "subject": "Sensor en Alerta!!"
 }

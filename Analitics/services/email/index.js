@@ -1,14 +1,10 @@
 const nodemailer = require('nodemailer')
 var fs = require('fs');
 
-const credentials = {
-    user: "OblArqui2021@gmail.com",
-    pass: "Arqui2021"
-}
-
 const sendEmail = async (params) =>{
-    const transporter = createTransport(credentials)
-    const mailOptions = createMailOptions(params)
+    let receivers = JSON.parse(fs.readFileSync(__dirname+'/receivers.json','utf8'))
+    const transporter = createTransport(receivers)
+    const mailOptions = createMailOptions(params, receivers)
     transporter.sendMail(mailOptions,(error,info)=>{
         if(error){
             console.error(`Error sending email: ${error}`)
@@ -18,19 +14,10 @@ const sendEmail = async (params) =>{
     })
 }
 
-function createTransport(gmailInfo){
-    var hostParam = new Object()
-    var userParam = new Object()
-    var passParam = new Object()
-    if (gmailInfo){
-        hostParam = 'smtp.gmail.com' 
-        userParam = gmailInfo.user
-        passParam = gmailInfo.pass
-    }else{
-        hostParam = 'smtp.ethereal.email'
-        userParam = process.env.ETHEREAL_USER
-        passParam = process.env.ETHEREAL_PASS
-    }
+function createTransport(receivers){
+    let hostParam = receivers.senderHostParam
+    let userParam = receivers.senderUserParam
+    let passParam = receivers.senderPassParam
 
     const transporter = nodemailer.createTransport({
         host: hostParam,
@@ -43,24 +30,22 @@ function createTransport(gmailInfo){
     return transporter
 }
 
-function createMailOptions(params){
-    var emails = JSON.parse(fs.readFileSync(__dirname+'/receivers.json','utf8'))
-    var emailTo = emails.email
-    var key = 'email'
-    var index = 2
-    var tempEmail = "expectedEmail"
-    while(tempEmail){
-        tempEmail = emails[key+index];
-        if(tempEmail){
+function createMailOptions(params, receivers){
+    let emailTo = ''
+    let first = true
+    receivers.emails.forEach(email =>{
+        if(first){
+            emailTo += email
+            first = false
+        }else{
             emailTo +=','
-            emailTo += tempEmail
-            index++
+            emailTo += email
         }
-    }
+    })
     const mailOptions = {
-        from: 'Analytics',
+        from: receivers.from,
         to: emailTo,
-        subject: 'Sensor en Alerta!!',
+        subject: receivers.subject,
         text:`Equipo!!,\n el sensor ${params.sensor_ESN} esta registrando valores anormales en la propiedad ${params.propertyParam}`
     }
     return mailOptions
