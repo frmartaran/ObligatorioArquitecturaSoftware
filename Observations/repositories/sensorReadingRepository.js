@@ -22,8 +22,8 @@ const SensorReadingRepository = {
             return newSensorReading;
         
         }catch(err){
-        handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Get`, message: err.message,payload: `DateFrom: ${dateFrom}`})
-    }
+            handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Get`, message: err.message,payload: `DateFrom: ${dateFrom}`})
+        }
     },
 }
 module.exports = SensorReadingRepository
