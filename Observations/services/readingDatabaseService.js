@@ -5,16 +5,40 @@ const ReadingDatabaseService = {
         let newSensorReading = await ReadingDatabaseRepository.Add(data);
         return newSensorReading;
     },
-    Get: (dateFrom) => {
-        let query = ReadingDatabaseRepository.Get(dateFrom);
+    Get: (dateFrom, pageLength) => {
+        let query = ReadingDatabaseRepository.Get(dateFrom, pageLength);
         return query;
     },
     GetLastDailyDate: async () => {
         let query = await ReadingDatabaseRepository.GetLastDailyDate();
         return query;
     },
-    GetDailyReadings: async (startDate, endDate) => {
-        let query = await ReadingDatabaseRepository.GetDailyReadings(startDate, endDate);
+    GetDailyReadingsFromRawData: async (startDate, endDate) => {
+        let query = await ReadingDatabaseRepository.GetDailyReadingsFromRawData(startDate, endDate);
+        return query;
+    },
+    GetSensorDailyReadingsFromRawDataByMeasurementType: async (startDate, endDate, measurementType, ESN) => {
+        let query = await ReadingDatabaseRepository.GetSensorDailyReadingsFromRawDataByMeasurementType(startDate, endDate, measurementType, ESN);
+        return query;
+    },
+    GetSensorMonthlyReadingsFromRawDataByMeasurementType: async (startDate, endDate, measurementType, ESN) => {
+        let query = await ReadingDatabaseRepository.GetSensorMonthlyReadingsFromRawDataByMeasurementType(startDate, endDate, measurementType, ESN);
+        return query;
+    },
+    GetSensorYearlyReadingsFromRawDataByMeasurementType: async (startDate, endDate, measurementType, ESN) => {
+        let query = await ReadingDatabaseRepository.GetSensorYearlyReadingsFromRawDataByMeasurementType(startDate, endDate, measurementType, ESN);
+        return query;
+    },
+    GetSensorDailyReadingsByMeasurementType: async (startDate, endDate, measurementType, ESN) => {
+        let query = await ReadingDatabaseRepository.GetSensorDailyReadingsByMeasurementType(startDate, endDate, measurementType, ESN);
+        return query;
+    },
+    GetSensorMonthlyReadingsByMeasurementType: async (startDate, endDate, measurementType, ESN) => {
+        let query = await ReadingDatabaseRepository.GetSensorMonthlyReadingsByMeasurementType(startDate, endDate, measurementType, ESN);
+        return query;
+    },
+    GetSensorYearlyReadingsByMeasurementType: async (startDate, endDate, measurementType, ESN) => {
+        let query = await ReadingDatabaseRepository.GetSensorYearlyReadingsByMeasurementType(startDate, endDate, measurementType, ESN);
         return query;
     },
     AddDailyReadings: async (data) => {

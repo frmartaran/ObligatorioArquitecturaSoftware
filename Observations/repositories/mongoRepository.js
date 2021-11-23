@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
+const Config = require('../config/default.json');
 
-mongoose.connect('mongodb://127.0.0.1:27017/test', {
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 36000,
+const mongoDb = Config.mongoDb;
+
+mongoose.connect(mongoDb.uri, mongoDb.options).then(()=>console.log('Connected to mongo!')).catch((err)=>{
+    handleInfraError({ app: process.env.APP_NAME, method: 'Init Mongo DB', message: err.message})
 });
 
 const properties = new mongoose.Schema({
@@ -35,10 +37,14 @@ const dailyReading = new mongoose.Schema({
     ESN: String,
     date: Date,
     sensorMeasurementName: String,
-    averageValue: Number
+    averageValue: Number,
+    totalSumValues: Number,
+    totalCountValues: Number
 });
 
 reading.index({ 'ESN': 1, 'date': 1, 'properties.finalUnit': 1 });
+
+dailyReading.index({ 'ESN': 1, 'date': 1, 'sensorMeasurementName': 1 });
 
 const Reading = mongoose.model('Reading', reading, 'reading');
 

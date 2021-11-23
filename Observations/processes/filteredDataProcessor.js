@@ -5,8 +5,7 @@ const queue = new Queue('incomingReadingData');
 const queue2 = require('../queues/queue')
 
 
-measurementsProcessor = (job) => {
-    console.log(job.data);
+filteredDataProcessor = (job) => {
     queue2.pendingValidationQueue.add(job.data)
     sensorReadingService.Add(job.data);
     let incomingReadingData = {
@@ -17,4 +16,4 @@ measurementsProcessor = (job) => {
     return Promise.resolve();
 }
 
-module.exports = measurementsProcessor;
+module.exports = filteredDataProcessor;

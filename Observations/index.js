@@ -1,16 +1,14 @@
 require('dotenv').config();
 const express = require('express');
 const router = require('./controllers/router');
-const Repository = require('./repositories/mysqlRepository');
+const sensorReadingService = require('./services/sensorReadingService');
 const app = express();
-const queue = require('./queues/queue')
+const queue = require('./queues/queue');
+const config = require('./config/default.json');
 
-const associateOriginalWithCatalogPropertyFilter = require('./processes/associateOriginalWithCatalogPropertyFilter/associateOriginalWithCatalogPropertyFilter')
-const unitTransforamtionFilter = require('./processes/unitTransforamtionFilter/unitTransforamtionFilter')
-
-Repository.sequelize.sync({ force: false}).then(() => {
-    console.log('tablas sincronizadas')
-});
+(async () => {
+    await sensorReadingService.Sync();
+})();
 
 const port = process.env.PORT;
 
@@ -21,13 +19,10 @@ app.listen(
     () => console.log(`Start listening on port http://localhost:${port}`)
 );
 
-queue.measurementsQueue.process(8, associateOriginalWithCatalogPropertyFilter);
-queue.originalWithCatalogPropertyQueue.process(8, unitTransforamtionFilter);
-queue.filteredDataQueue.process(8, __dirname +'/processes/measurementsProcessor.js')
+queue.measurementsQueue.process(8, __dirname + '/processes/associateOriginalWithCatalogPropertyFilter/associateOriginalWithCatalogPropertyFilter.js');
+queue.originalWithCatalogPropertyQueue.process(8, __dirname + '/processes/unitTransforamtionFilter/unitTransforamtionFilter.js');
+queue.filteredDataQueue.process(8, __dirname + '/processes/filteredDataProcessor.js');
+queue.incomingReadingDataQueue.process(8, __dirname + '/processes/readingDatabaseProcessor.js');
 
-queue.incomingReadingDataQueue.process(8, __dirname +'/processes/readingDatabaseProcessor.js');
-
-queue.dailyReadingsQueue.add({}, { repeat: { cron: '24 11 * * *' } });
-
-queue.dailyReadingsQueue.process(__dirname +'/processes/dailyReadingsProcessor.js');
-
+queue.dailyReadingsQueue.add({}, { repeat: config.dailyProcessorCronExpression });
+queue.dailyReadingsQueue.process(__dirname + '/processes/dailyReadingsProcessor.js');
