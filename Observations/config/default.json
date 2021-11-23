@@ -11,9 +11,9 @@
         "connectTimeout": 36000000
       },
       "pool": {
-        "max": 16,
+        "max": 1,
         "min": 0,
-        "idle": 36000000,
+        "idle": 10000,
         "acquire": 36000000
       }
     },
@@ -55,5 +55,5 @@
       "port": 6379,
       "host": "localhost"
     },
-    "dailyProcessorCronExpression:": "53 23 * * *"
+    "dailyProcessorCronExpression:": "15 1 * * *"
 }

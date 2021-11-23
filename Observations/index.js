@@ -19,10 +19,10 @@ app.listen(
     () => console.log(`Start listening on port http://localhost:${port}`)
 );
 
-queue.measurementsQueue.process(8, __dirname + '/processes/associateOriginalWithCatalogPropertyFilter/associateOriginalWithCatalogPropertyFilter.js');
-queue.originalWithCatalogPropertyQueue.process(8, __dirname + '/processes/unitTransforamtionFilter/unitTransforamtionFilter.js');
-queue.filteredDataQueue.process(8, __dirname + '/processes/filteredDataProcessor.js');
-queue.incomingReadingDataQueue.process(8, __dirname + '/processes/readingDatabaseProcessor.js');
+queue.measurementsQueue.process(4, __dirname + '/processes/associateOriginalWithCatalogPropertyFilter/associateOriginalWithCatalogPropertyFilter.js');
+queue.originalWithCatalogPropertyQueue.process(4, __dirname + '/processes/unitTransforamtionFilter/unitTransforamtionFilter.js');
+queue.filteredDataQueue.process(4, __dirname + '/processes/filteredDataProcessor.js');
+queue.incomingReadingDataQueue.process(4, __dirname + '/processes/readingDatabaseProcessor.js');
 queue.dailyReadingsQueue.process(__dirname + '/processes/dailyReadingsProcessor.js');
 
 queue.dailyReadingsQueue.getRepeatableJobs().then(repeatableJobs => {
