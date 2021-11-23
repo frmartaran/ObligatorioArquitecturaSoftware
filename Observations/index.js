@@ -23,6 +23,13 @@ queue.measurementsQueue.process(8, __dirname + '/processes/associateOriginalWith
 queue.originalWithCatalogPropertyQueue.process(8, __dirname + '/processes/unitTransforamtionFilter/unitTransforamtionFilter.js');
 queue.filteredDataQueue.process(8, __dirname + '/processes/filteredDataProcessor.js');
 queue.incomingReadingDataQueue.process(8, __dirname + '/processes/readingDatabaseProcessor.js');
-
-queue.dailyReadingsQueue.add({}, { repeat: config.dailyProcessorCronExpression });
 queue.dailyReadingsQueue.process(__dirname + '/processes/dailyReadingsProcessor.js');
+
+queue.dailyReadingsQueue.getRepeatableJobs().then(repeatableJobs => {
+    if (repeatableJobs.length > 0) {
+        repeatableJobs.forEach(async job => {
+            await queue.dailyReadingsQueue.removeRepeatableByKey(job.key);
+        });
+    }
+    queue.dailyReadingsQueue.add({}, { repeat: { "cron": config['dailyProcessorCronExpression:'] } });
+});
