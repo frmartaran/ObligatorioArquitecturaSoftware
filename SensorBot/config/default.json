@@ -1,0 +1,23 @@
+
+{
+    "sensor": {
+      "ESN": "S1",
+      "name": "Model 1",
+      "location": "10000-10000",
+      "properties":[
+        {
+          "name": "temperature",
+          "unit":"F",
+          "minUnitValue": 68,
+          "maxUnitValue": 86
+        },
+        {
+          "name": "atm pressure",
+          "unit":"HP",
+          "minUnitValue": 68,
+          "maxUnitValue": 86
+        }
+      ]
+    },
+    "latencia":8000
+}
