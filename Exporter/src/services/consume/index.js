@@ -9,7 +9,7 @@ const getData = async (ID) =>{
         const values = response.data
         const date = new Date(values[values.length-1].date)
         const newConsumeDate = date.getTime()
-        updateTimestamp(newConsumeDate,ID)
+        updateTimestamp(ID,newConsumeDate)
         return values
     }
     else{

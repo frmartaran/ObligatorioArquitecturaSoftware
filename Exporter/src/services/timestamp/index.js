@@ -19,7 +19,7 @@ const getTimestamp = async (ID)=>{
 }
 
 const updateTimestamp = async (ID,newTimestamp)=>{
-    const url = `${baseURL}consumeDate/${ID}?consumeDate=${newTimestamp}`
+    const url = `${baseURL}${ID}?consumeDate=${newTimestamp}`
     do{
         var retries=0
         var response = await performPUT(url)
