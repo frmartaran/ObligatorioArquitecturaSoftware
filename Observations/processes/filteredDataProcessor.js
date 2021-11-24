@@ -7,6 +7,10 @@ const prefixMethod = "filteredDataProcessor";
 filteredDataProcessor = async (job) => {
     try{
         queue.pendingValidationQueue.add(job.data)
+        let dateFrom = new Date(job.data.incomingDate);
+        let dateTo = new Date()
+        let differenceInTime = dateTo.getTime() - dateFrom.getTime();
+        job.data.processTime = differenceInTime
         await readingDatabaseService.Add(job.data);
         return Promise.resolve();
     }catch (err){
