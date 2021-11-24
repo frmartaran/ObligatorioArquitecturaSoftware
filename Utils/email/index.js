@@ -46,7 +46,7 @@ function createMailOptions(params, receivers){
         from: receivers.from,
         to: emailTo,
         subject: receivers.subject,
-        text:`Equipo!!,\n el sensor ${params.sensor_ESN} esta registrando valores anormales en la propiedad ${params.propertyParam}`
+        text:`Equipo!!,\n el sensor ${params?.sensor_ESN} esta registrando valores anormales en la propiedad ${params?.propertyParam}`
     }
     return mailOptions
 }

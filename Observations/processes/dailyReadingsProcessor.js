@@ -1,4 +1,5 @@
 const readingDatabaseService = require('../services/readingDatabaseService');
+const {sendEmail} = require('../../Utils/email');
 const prefixMethod = "dailyReadingsProcessor";
 
 dailyReadingsProcessor = async (job) => {
@@ -21,6 +22,7 @@ dailyReadingsProcessor = async (job) => {
         return Promise.resolve();
     }catch (err){
         handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}`, message: err, payload: JSON.stringify(job.data) });
+        sendEmail();
         return Promise.reject(err);
     }
 }

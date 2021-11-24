@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Config = require('../config/default.json');
 const { handleInfraError } = require('../../ErrorHandler/infra_error');
+const {sendEmail} = require('../../Utils/email');
 const prefixMethod = "connection" 
 
 const mongoDb = Config.database;
@@ -9,7 +10,12 @@ mongoose.connect(mongoDb.uri, mongoDb.options)
   .then(() => {
     console.log('connected to mongo successfully')
   })
-  .catch(err => handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}`, message: err, payload: '' }))
+  .catch(err => {
+      if(err.message.includes('ECONNREFUSED')){
+        sendEmail();
+      };
+      handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}`, message: err, payload: '' })
+    });
 
 const properties = new mongoose.Schema({
     propertyName: String,
