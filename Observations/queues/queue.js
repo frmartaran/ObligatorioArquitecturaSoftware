@@ -27,14 +27,7 @@ const filteredDataQueue = new Queue(
             host:config.filteredData.host 
         } 
     });
-const incomingReadingDataQueue = new Queue(
-    config.incomingReadingData.name,
-    {redis: 
-        {
-            port:config.incomingReadingData.port,
-            host:config.incomingReadingData.host 
-        } 
-    });
+
 const dailyReadingsQueue = new Queue(
     config.dailyReadingsQueue.name,
     {redis: 
@@ -43,6 +36,7 @@ const dailyReadingsQueue = new Queue(
             host:config.dailyReadingsQueue.host 
         } 
     });
+
 const pendingValidationQueue = new Queue(
     config.pendingValidationQueue.name,
     {redis: 
@@ -56,7 +50,6 @@ module.exports = {
     originalWithCatalogPropertyQueue,
     measurementsQueue,
     filteredDataQueue,
-    incomingReadingDataQueue,
     dailyReadingsQueue,
     pendingValidationQueue
 }

@@ -1,8 +1,8 @@
 const Repository = require('./mongoRepository')
 const { handleInfraError } = require('../../ErrorHandler/infra_error')
-const prefixMethod = "ReadingDB"
+const prefixMethod = "mongoDB"
 
-const readingDatabaseRepository = {
+const databaseRepository = {
     Add: async (data) => {
         try {
             const reading = new Repository.Reading(data);
@@ -206,4 +206,4 @@ const readingDatabaseRepository = {
         }
     },
 }
-module.exports = readingDatabaseRepository
+module.exports = databaseRepository

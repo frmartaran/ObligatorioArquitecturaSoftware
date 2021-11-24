@@ -5,14 +5,14 @@ const originalWithCatalogPropertyQueue = queue.originalWithCatalogPropertyQueue
 associateOriginalWithCatalogPropertyFilter = (job) => {
     let originalWithCatalogProperty = job.data
     const asociatedDataList = []
-    job.data.properties.forEach(properti => {
+    job.data.properties.forEach(property => {
         job.data.catalogProperties.forEach(catalogProp =>{
-            if(properti.Name === catalogProp.Name){
+            if(property.Name === catalogProp.Name){
                 const asociatedData = {
-                    propertyName: properti.Name,
-                    originalUnit: properti.unit,
+                    propertyName: property.Name,
+                    originalUnit: property.unit,
                     finalUnit: catalogProp.unit,
-                    value: properti.Value,
+                    value: property.Value,
                     min: catalogProp.sensorProperty.minUnitValue,
                     max: catalogProp.sensorProperty.maxUnitValue,
                 }

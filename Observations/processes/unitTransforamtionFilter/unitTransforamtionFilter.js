@@ -1,8 +1,6 @@
-//const Queue = require('bull');
-var fs = require('fs');
+let fs = require('fs');
 
-const queue = require('../../queues/queue')
-//const queue = new Queue('unitTransforamtion');
+const queue = require('../../queues/queue');
 
 unitTransforamtionFilter = (job) => {
     const transformedDataList = []
@@ -14,13 +12,12 @@ unitTransforamtionFilter = (job) => {
         properties: job.data.asociatedData
     }
     job.data.asociatedData.forEach(data => {
-        var Transf = JSON.parse(fs.readFileSync('./processes/unitTransforamtionFilter/transformations.json', 'utf8'));//processes/unitTransforamtionFilter/transformations.json
+        let Transf = JSON.parse(fs.readFileSync('./processes/unitTransforamtionFilter/transformations.json', 'utf8'));
         const originalUnit = data.originalUnit
         const finalUnit = data.finalUnit
         const tag = originalUnit+"-"+finalUnit
         const tr = Transf[tag]
         
-        let value = data.value
         let result = eval(tr)
 
         const transformedData = {
@@ -32,8 +29,7 @@ unitTransforamtionFilter = (job) => {
         }
         transformedDataList.push(transformedData)
     })
-    transformation.transformedData = transformedDataList
-    console.log(transformation)
+    transformation.transformedData = transformedDataList;
     queue.filteredDataQueue.add(transformation);
     return Promise.resolve();
 }

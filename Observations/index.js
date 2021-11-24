@@ -1,14 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const router = require('./controllers/router');
-const sensorReadingService = require('./services/sensorReadingService');
 const app = express();
 const queue = require('./queues/queue');
 const config = require('./config/default.json');
-
-(async () => {
-    await sensorReadingService.Sync();
-})();
 
 const port = process.env.PORT;
 
@@ -22,7 +17,6 @@ app.listen(
 queue.measurementsQueue.process(4, __dirname + '/processes/associateOriginalWithCatalogPropertyFilter/associateOriginalWithCatalogPropertyFilter.js');
 queue.originalWithCatalogPropertyQueue.process(4, __dirname + '/processes/unitTransforamtionFilter/unitTransforamtionFilter.js');
 queue.filteredDataQueue.process(4, __dirname + '/processes/filteredDataProcessor.js');
-queue.incomingReadingDataQueue.process(4, __dirname + '/processes/readingDatabaseProcessor.js');
 queue.dailyReadingsQueue.process(__dirname + '/processes/dailyReadingsProcessor.js');
 
 queue.dailyReadingsQueue.getRepeatableJobs().then(repeatableJobs => {

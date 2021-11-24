@@ -10,7 +10,7 @@ module.exports = class ReadingsController {
         let query = readingDatabaseService.Get(dateFrom, pageLength);
         query.exec((err, reading) => {
             res.send(reading);
-        });            
+        });          
     };
     async getAverages (req, res) {
         let dateFromTimestamp = Number(req.query.dateFrom);
@@ -21,15 +21,15 @@ module.exports = class ReadingsController {
         let averageType = req.query.averageType;
         let measurementType = req.query.measurementType;
         let differenceInTime = dateTo.getTime() - dateFrom.getTime();
-        let differenceInDays = differenceInTime / (1000 * 3600 * 24);;
+        let differenceInDays = differenceInTime / (1000 * 3600 * 24);
         switch (averageType) {
-            case "DAILY":
+            case Config.averageType.daily:
                 this.calculateDailyAverage(differenceInDays, dateFrom, dateTo, measurementType, ESN, res);
                 break;
-            case "MONTHLY":
+            case Config.averageType.monthly:
                 this.calculateMonthlyAverage(differenceInDays, dateFrom, dateTo, measurementType, ESN, res);
                 break;
-            case "YEARLY":
+            case Config.averageType.yearly:
                 this.calculateYearlyAverage(dateFrom, dateTo, measurementType, ESN, res)
                 break;
             default:

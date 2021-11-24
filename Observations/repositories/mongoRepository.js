@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const Config = require('../config/default.json');
 
-const mongoDb = Config.mongoDb;
+const mongoDb = Config.database;
 
-mongoose.connect(mongoDb.uri, mongoDb.options).then(()=>console.log('Connected to mongo!')).catch((err)=>{
+mongoose.connect(mongoDb.uri, mongoDb.options).catch((err)=>{
     handleInfraError({ app: process.env.APP_NAME, method: 'Init Mongo DB', message: err.message})
 });
 
