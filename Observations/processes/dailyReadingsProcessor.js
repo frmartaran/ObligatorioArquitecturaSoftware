@@ -1,6 +1,7 @@
 const readingDatabaseService = require('../services/readingDatabaseService');
 const {sendEmail} = require('../../Utils/email');
 const prefixMethod = "dailyReadingsProcessor";
+const Config = require('./../config/default.json');
 
 dailyReadingsProcessor = async (job) => {
     try{
@@ -22,7 +23,12 @@ dailyReadingsProcessor = async (job) => {
         return Promise.resolve();
     }catch (err){
         handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}`, message: err, payload: JSON.stringify(job.data) });
-        sendEmail();
+        let params = {
+            from: Config.microserviceName,
+            subject: Config.dailyProcessorFailureEmailSubject,
+            text: Config.dailyProcessorFailureEmailText
+        };
+        sendEmail(params);
         return Promise.reject(err);
     }
 }

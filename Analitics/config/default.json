@@ -1,0 +1,6 @@
+
+{
+    "microserviceName": "Analytics",
+    "alarmEmailSubject": "Sensor en alerta!",
+    "alarmEmailText": "Equipo!!,\n se están registrando valores anormales en el par (sensor, propiedad) = "
+}

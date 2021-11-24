@@ -1,4 +1,5 @@
 const {sendEmail}=require('../../../../Utils/email')
+const Config = require('../../../config/default.json');
 
 validate = (job) => {
     const properties = job.data.transformedData
@@ -7,10 +8,9 @@ validate = (job) => {
         const property = properties[index];
         if(property.min > property.value ||property.max < property.value){
             var params = {
-                name: 'Test',
-                email:'d.baccino@outlook.com',
-                sensor_ESN: esn,
-                propertyParam: property.propertyName
+                from: Config.microserviceName,
+                subject: Config.alarmEmailSubject,
+                text: Config.alarmEmailText  + `(${esn}, ${property.propertyName})`
             }
             sendEmail(params)
         }   

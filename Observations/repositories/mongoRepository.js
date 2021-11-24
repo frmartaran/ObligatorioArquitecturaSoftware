@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const Config = require('../config/default.json');
 const { handleInfraError } = require('../../ErrorHandler/infra_error');
 const {sendEmail} = require('../../Utils/email');
-const prefixMethod = "connection" 
+const prefixMethod = "connection";
+const parser = require('cron-parser');
 
 const mongoDb = Config.database;
 
@@ -12,9 +13,16 @@ mongoose.connect(mongoDb.uri, mongoDb.options)
   })
   .catch(err => {
       if(err.message.includes('ECONNREFUSED')){
-        sendEmail();
+        let cronExp = Config['dailyProcessorCronExpression:'];
+        let interval = parser.parseExpression(cronExp);
+        let params = {
+          from: Config.microserviceName,
+          subject: Config.connectionRefusedEmailSubject,
+          text: Config.connectionRefusedEmailText + interval.next().toString()
+        };
+        sendEmail(params);
       };
-      handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}`, message: err, payload: '' })
+      handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}`, message: err, payload: '' });
     });
 
 const properties = new mongoose.Schema({

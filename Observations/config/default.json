@@ -50,5 +50,10 @@
       "daily": "DAILY",
       "monthly": "MONTHLY",
       "yearly": "YEARLY"
-    }
+    },
+    "microserviceName": "Observation",
+    "dailyProcessorFailureEmailSubject": "Falla calculo promedio sensores",
+    "dailyProcessorFailureEmailText": "Equipo!!,\n fallo el proceso diario de precalculo de datos de sensores!",
+    "connectionRefusedEmailSubject": "Falla conexion con mongoDB",
+    "connectionRefusedEmailText": "Equipo!!,\n fallo la conexion con mongoDB! No se estan almacenando datos de sensores! \n Fecha de corrida del proximo precalculo diario: "
 }
