@@ -31,7 +31,7 @@ function createRequestJson(configFile) {
   
   date = new Date(date.setDate(date.getDate()-configFile.daysBack));
 
-  let momentDate = moment(date).format('YYYY-MM-DD h:mm:ss')
+  let momentDate = moment(date).format('YYYY-MM-DD HH:mm:ss')
 
   let requestProperties = createrequestProperties(sensor)
   let json = {
