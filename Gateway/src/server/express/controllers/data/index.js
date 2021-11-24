@@ -7,6 +7,8 @@ const postData = async (req,res) => {
         if(result){
             let sensorData=req.body
             sensorData.catalogProperties = result.properties
+            let incomingDate = new Date()
+            sensorData.incomingDate = incomingDate
             sender.sendData(sensorData)
         }
     })
@@ -15,3 +17,6 @@ const postData = async (req,res) => {
 };
 
 module.exports = {postData}
+
+//let differenceInTime = dateTo.getTime() - dateFrom.getTime();
+  //      let differenceInDays = differenceInTime / (1000 * 3600 * 24);

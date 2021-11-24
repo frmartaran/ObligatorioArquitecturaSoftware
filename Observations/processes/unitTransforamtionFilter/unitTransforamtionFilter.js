@@ -11,7 +11,8 @@ unitTransforamtionFilter = (job) => {
         Nombre: job.data.name,
         location: job.data.location,
         date: job.data.date,
-        properties: job.data.asociatedData
+        properties: job.data.asociatedData,
+        incomingDate: job.data.incomingDate
     }
     job.data.asociatedData.forEach(data => {
         var Transf = JSON.parse(fs.readFileSync('./processes/unitTransforamtionFilter/transformations.json', 'utf8'));//processes/unitTransforamtionFilter/transformations.json
