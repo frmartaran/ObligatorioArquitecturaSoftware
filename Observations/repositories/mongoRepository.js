@@ -39,6 +39,7 @@ const reading = new mongoose.Schema({
     name: String,
     location: String,
     date: Date,
+    processTime: Number,
     properties: [properties],
     transformedData: [transformedData]
 });
