@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const alarms = require('./alarms')
+const reports = require('./reports')
 
-router.use(alarms)
+router.use(reports)
 
 module.exports = router
