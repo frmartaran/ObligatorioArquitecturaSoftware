@@ -11,6 +11,7 @@ const PropertyRepository = {
         }
         catch (err) {
             handleInfraError({ app: process.env.APP_NAME, method: 'Find All', message: err.message })
+            throw err
         }
     },
 
@@ -22,6 +23,7 @@ const PropertyRepository = {
         }
         catch (err) {
             handleInfraError({ app: process.env.APP_NAME, method: 'Find All', message: err.message, payload: id })
+            throw err
         }
     },
 
@@ -32,6 +34,7 @@ const PropertyRepository = {
             return newProperty
         } catch (err) {
             handleInfraError({ app: process.env.APP_NAME, method: 'Find All', message: err.message, payload: JSON.stringify(data) })
+            throw err
         }
     },
 
@@ -44,6 +47,7 @@ const PropertyRepository = {
         }
         catch (err) {
             handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Find All`, message: err.message, payload: id })
+            throw err
         }
     }
 }
