@@ -5,8 +5,8 @@ const databaseService = {
         let newSensorReading = await databaseRepository.Add(data);
         return newSensorReading;
     },
-    Get: (dateFrom, pageLength) => {
-        let query = databaseRepository.Get(dateFrom, pageLength);
+    Get: async (dateFrom, pageLength) => {
+        let query = await databaseRepository.Get(dateFrom, pageLength);
         return query;
     },
     GetLastDailyDate: async () => {
