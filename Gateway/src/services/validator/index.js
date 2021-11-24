@@ -21,7 +21,7 @@ const validateSingleSensor = async (sensorESN) =>{
         console.log(`Cache: ${result}`)
         if(!result){
             apiResponse = await client.getSensorSingle(sensorESN);
-            if(apiResponse.status == 200){
+            if(apiResponse?.status == 200){
                 let data = apiResponse.data
                 console.log(`API: ${data}`)        
                 refresh(sensorESN,data)
