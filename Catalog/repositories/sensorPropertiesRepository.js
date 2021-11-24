@@ -10,6 +10,7 @@ const sensorPropertiesRepository = {
             return sensorProperty;
         } catch (err) {
             handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Find By ID`, message: err.message, payload: `SensorID: ${sensorId}, PropName: ${propertyName}` })
+            throw err
         }
     },
 
@@ -20,6 +21,7 @@ const sensorPropertiesRepository = {
             return newSensorProperty
         } catch (err) {
             handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Add`, message: err.message, payload: JSON.stringify(data) })
+            throw err
         }
     },
 
@@ -29,6 +31,7 @@ const sensorPropertiesRepository = {
             return "deleted"
         } catch (err) {
             handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Find By ID`, message: err.message, payload: sensorProperty })
+            throw err
         }
     },
 
@@ -42,6 +45,7 @@ const sensorPropertiesRepository = {
             return newSensorPropety
         } catch (err) {
             handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Add`, message: err.message, payload:JSON.stringify(data) })
+            throw err
         }
     },
 }
