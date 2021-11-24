@@ -4,10 +4,11 @@ const router = require('./controllers/router');
 const app = express();
 const queue = require('./queues/queue');
 const config = require('./config/default.json');
-
+const {handleApiError}=require('../ErrorHandler/api_errors')
 const port = process.env.PORT;
 
 app.use('/observations', router);
+app.use(handleApiError)
 
 app.listen(
     port,
