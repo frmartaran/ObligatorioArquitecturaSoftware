@@ -9,8 +9,8 @@ const SensorService = {
         return sensors;
     },
 
-    findById: async (id) => {
-        let sensors = await SensorRepository.findById(id)
+    findById: async (sensorId) => {
+        let sensors = await SensorRepository.findById(sensorId)
         return sensors;
     },
 
@@ -19,10 +19,16 @@ const SensorService = {
         return newSensor
     },
 
-    Delete: async (id) => {
-        let sensors = await SensorRepository.Delete(id)
+    Delete: async (sensorId) => {
+        let sensors = await SensorRepository.Delete(sensorId)
         let updateGateway = await SensorService.UpdateGateway(sensorId, 'DELETE')
         return sensors
+    },
+
+    Put: async (data, sensorId) => {
+        let newSensor = await SensorRepository.Put(data, sensorId)
+        let updateGateway = await SensorService.UpdateGateway(sensorId, 'UPDATE')
+        return newSensor
     },
 
     AddProperty: async (sensorId, property) => {
@@ -53,6 +59,12 @@ const SensorService = {
             sensor: sensor
         }
         return await sensorToQueue(send)
-    }
+    },
+
+    UpdateSensorProperty: async (data, sensorId, propertyId) => {
+        let sensorProperty = await SensorpropertiesRepository.Put(data, sensorId, propertyId)
+        let updateGateway = await SensorService.UpdateGateway(sensorId, 'UPDATE')
+        return await sensorProperty
+    },
 }
 module.exports = SensorService

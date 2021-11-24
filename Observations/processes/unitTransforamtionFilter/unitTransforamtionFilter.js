@@ -20,17 +20,21 @@ unitTransforamtionFilter = (job) => {
         
         let result = eval(tr)
 
-        const transformedData = {
-            propertyName: data.propertyName,
-            unit: data.finalUnit,
-            value: result,
-            min: data.min,
-            max: data.max
+        if(result){
+            const transformedData = {
+                propertyName: data.propertyName,
+                unit: data.finalUnit,
+                value: result,
+                min: data.min,
+                max: data.max
+            }
+            transformedDataList.push(transformedData)
         }
-        transformedDataList.push(transformedData)
     })
     transformation.transformedData = transformedDataList;
-    queue.filteredDataQueue.add(transformation);
+    if(transformedDataList.length) {
+        queue.filteredDataQueue.add(transformation);
+    };
     return Promise.resolve();
 }
 

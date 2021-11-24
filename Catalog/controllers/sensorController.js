@@ -64,4 +64,32 @@ router.delete('/:sensorId/property/:propertyName', async (req, res) => {
     }
 })
 
+router.put('/:sensorId', async (req, res) =>{
+    let response = await authorizationService.AdminAuthorization(req)
+    if(response.status === 200){
+        const body = req.body
+        const sensorId = req.params.sensorId
+        const sensor = await sensorService.Put(body,sensorId)
+        res.send(sensor)
+    }else{
+        res.status(response.status)
+        res.send(response.message)
+    }
+})
+
+router.put('/:sensorId/property/:propertyName', async (req, res) => {
+    let response = await authorizationService.AdminAuthorization(req)
+    if(response.status === 200){
+        const sensorId = req.params.sensorId
+        const propertyName = req.params.propertyName
+        const body = req.body
+        const sensorProperty = await sensorService.UpdateSensorProperty(body, sensorId, propertyName)
+        res.send(sensorProperty)
+    }else{
+        res.status(response.status)
+        res.send(response.message)
+    }
+})
+
+
 module.exports = router

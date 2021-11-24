@@ -12,11 +12,11 @@ const validateSingleSensor = async (sensorESN) =>{
         let useCache = checkCache()
         if(useCache){
             result = await getSensor(sensorESN)
-                if(result){
-                    let parsed = JSON.parse(result)
-                    refresh(sensorESN,parsed)
-                    return (parsed)
-                }  
+            if(result){
+                let parsed = JSON.parse(result)
+                refresh(sensorESN,parsed)
+                return (parsed)
+            }  
         }
         console.log(`Cache: ${result}`)
         if(!result){
