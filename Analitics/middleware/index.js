@@ -3,7 +3,7 @@ function validateParams(req,res,next){
     if(isNaN(req.query.dateFrom)||isNaN(req.query.dateTo)){
         res.send('some date is not a number').status(400)
     }else if(!equalsIgnoreCase('MONTHLY',averageType)&&
-    !equalsIgnoreCase('YEARLY',averageType)&&equalsIgnoreCase('DAILY',averageType)){
+    !equalsIgnoreCase('YEARLY',averageType)&&!equalsIgnoreCase('DAILY',averageType)){
         res.send(`type ${averageType} is not supported`).status(400)
     }else if(!req.query.ESN){
         res.send('ESN can not be null').status(400)

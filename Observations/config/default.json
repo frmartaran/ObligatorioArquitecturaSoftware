@@ -4,7 +4,7 @@
       "uri": "mongodb://127.0.0.1:27017/test",
       "options": {
         "useUnifiedTopology": true,
-        "serverSelectionTimeoutMS": 36000000
+        "serverSelectionTimeoutMS": 3600
       }
     },
     "pageLength": 200,
@@ -38,7 +38,14 @@
       "port": 6379,
       "host": "localhost"
     },
-    "dailyProcessorCronExpression:": "15 1 * * *",
+    "defaultJobOptions": {
+      "attempts": 3,
+      "backoff": {
+        "type": "fixed",
+        "delay": 1000
+      }
+    },
+    "dailyProcessorCronExpression:": "3 1 * * *",
     "averageType": {
       "daily": "DAILY",
       "monthly": "MONTHLY",

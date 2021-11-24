@@ -1,6 +1,6 @@
-const Repository = require('./mongoRepository')
-const { handleInfraError } = require('../../ErrorHandler/infra_error')
-const prefixMethod = "mongoDB"
+const Repository = require('./mongoRepository');
+const { handleInfraError } = require('../../ErrorHandler/infra_error');
+const prefixMethod = "mongoDB";
 
 const databaseRepository = {
     Add: async (data) => {

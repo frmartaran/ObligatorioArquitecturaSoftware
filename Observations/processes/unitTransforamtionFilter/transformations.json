@@ -6,6 +6,6 @@
     "C-K": "value + 273.15",
     "K-C": "value - 273.15",
     "K-F": "(value + 273.15) * 5/9 + 32",
-    "PA-PAS": "value * 101325",
-    "PAS-PA": "value/101325"
+    "HP-PAS": "value * 101325",
+    "PAS-HP": "value/101325"
 }

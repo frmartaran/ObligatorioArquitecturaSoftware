@@ -1,4 +1,4 @@
-const {sendEmail}=require('../../email')
+const {sendEmail}=require('../../../../Utils/email')
 
 validate = (job) => {
     const properties = job.data.transformedData

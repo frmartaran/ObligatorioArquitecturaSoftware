@@ -1,0 +1,5 @@
+
+[Event: GET /exporter/consumeDate/:id] [Data: UserID: 1] [APP: LOGIN]
+[Event: /consume/:ID] [Data: UserID: 1] [APP: EXPORTER]
+[Event: PUT /exporter/:id] [Data: Usuario: 1, Nuevo Timestamp: 1637731341000] [APP: LOGIN]
+[Event: GET /reports] [Data: {"dateFrom":"1637689626000","dateTo":"1637775094","ESN":"S1","averageType":"DAILY","measurementType":"atm pressure"}] [APP: ANALYTICS]

@@ -7,6 +7,8 @@ const postData = async (req,res) => {
         if(result){
             let sensorData=req.body
             sensorData.catalogProperties = result.properties
+            let incomingDate = new Date()
+            sensorData.incomingDate = incomingDate
             sender.sendData(sensorData)
         }
     })

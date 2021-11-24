@@ -1,5 +1,0 @@
-
-[APP:Catalog] [Method: SensorRepository: Add] [ERROR: Validation error] [Payload: {"ESN":"S1","model":"M1","name":"sensor 1","location":"12314"}] [DateTimestamp: 1637706659345]
-[APP:Catalog] [Method: SensorRepository: Add] [ERROR: Validation error] [Payload: {"ESN":"S1","model":"M1","name":"sensor 1","location":"12314"}] [DateTimestamp: 1637706667970]
-[APP:Catalog] [Method: SensorRepository: Add] [ERROR: Validation error] [Payload: {"ESN":"S1","model":"M1","name":"sensor 1","location":"12314"}] [DateTimestamp: 1637706668866]
-[APP:Catalog] [Method: SensorRepository: Add] [ERROR: Validation error] [Payload: {"ESN":"S1","model":"M1","name":"sensor 1","location":"12314"}] [DateTimestamp: 1637706670516]
