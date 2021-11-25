@@ -1,7 +1,7 @@
 const readingDatabaseService = require('../services/readingDatabaseService');
 
 class ReadingsLogic {
-    calculateDailyAverage = async (differenceInDays, dateFrom, dateTo, measurementType, ESN, res) => {
+    calculateDailyAverage = async (differenceInDays, dateFrom, dateTo, measurementType, ESN, res, next) => {
         if(differenceInDays > 365){
             res.send("Error. La diferencia entre fechas es muy grande para el promedio diario.")
         }else {
@@ -13,10 +13,11 @@ class ReadingsLogic {
                 dailyReadingsByMeasurementType = dailyReadingsByMeasurementType.concat(todayReadings);
             };
             res.send(dailyReadingsByMeasurementType);
+            next()
         }
     };
 
-    calculateMonthlyAverage = async (differenceInDays, dateFrom, dateTo, measurementType, ESN, res) => {
+    calculateMonthlyAverage = async (differenceInDays, dateFrom, dateTo, measurementType, ESN, res, next) => {
         if(differenceInDays > 3650){
             res.send("Error. La diferencia entre fechas es muy grande para el promedio mensual.")
         }else {
@@ -45,10 +46,11 @@ class ReadingsLogic {
                 });
             };
             res.send(monthlyReadingsByMeasurementType);
+            next();
         }
     };
 
-    calculateYearlyAverage = async (dateFrom, dateTo, measurementType, ESN, res) => {
+    calculateYearlyAverage = async (dateFrom, dateTo, measurementType, ESN, res, next) => {
         let yearlyReadingsByMeasurementType = await readingDatabaseService.GetSensorYearlyReadingsByMeasurementType(dateFrom, dateTo, measurementType, ESN);
         let lastDateInDailyReadings = await readingDatabaseService.GetLastDailyDate();
         if(this.compareLastDailyDateWithToDate(dateTo, lastDateInDailyReadings)){
@@ -73,6 +75,7 @@ class ReadingsLogic {
             });
         };
         res.send(yearlyReadingsByMeasurementType);
+        next();
     };
 
     compareLastDailyDateWithToDate = (dateTo, lastDateInDailyReadings) => {

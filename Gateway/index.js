@@ -1,8 +1,8 @@
 //Load config
 require('dotenv').config();
-const queue = require('./src/queues/queue');
-const factory = require('./src/server/factory');
-const config = require('./src/config/envs/default.json');
+const queue = require('./queues/queue');
+const factory = require('./server/factory');
+const config = require('./config/envs/default.json');
 
 console.log(process.env.PORT)
 

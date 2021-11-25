@@ -21,25 +21,4 @@ const sender = async (json,res)=>{
     
 }
 
-/*const getPropertiesBySensor = async (ESN) => {
-
-    const options = {
-        url: 'http://localhost:3000/catalog/sensor/'+ESN,
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Accept-Charset': 'utf-8',
-            'User-Agent': 'my-reddit-client'
-        }
-    };
-    let algo
-    let result = await request(options, await function(err, res, body) {
-        algo = JSON.parse(body);
-        console.log("la concha de la lora")
-        console.log(algo);
-    })
-    console.log(algo);
-    return  result.toJSON()
-  }*/
-
 module.exports = {sender}

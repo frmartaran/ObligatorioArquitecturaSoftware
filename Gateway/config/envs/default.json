@@ -6,6 +6,7 @@
       "port": 6379,
       "host": "localhost",
       "numberOfProcesses": 4,
-      "processorLocation": "/src/processes/updateCacheProces"
-    }
+      "processorLocation": "/processes/updateCacheProces"
+    },
+    "OBSERVATIONS_QUEUE_NAME":"measurements"
 }

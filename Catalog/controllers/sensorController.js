@@ -11,7 +11,7 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const sensors = await sensorService.findById(req.params.id)
         res.send(sensors)
@@ -21,7 +21,7 @@ router.get('/:id', async (req, res) => {
 })
 
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
     try {
         let response = await authorizationService.AdminAuthorization(req)
         if (response.status === 200) {
@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.post('/:sensorId', async (req, res) => {
+router.post('/:sensorId', async (req, res, next) => {
     try {
         let response = await authorizationService.AdminAuthorization(req)
         if (response.status === 200) {
@@ -56,7 +56,7 @@ router.post('/:sensorId', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         let response = await authorizationService.AdminAuthorization(req)
         if (response.status === 200) {
@@ -72,7 +72,7 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:sensorId/property/:propertyName', async (req, res) => {
+router.delete('/:sensorId/property/:propertyName', async (req, res, next) => {
     try {
         let response = await authorizationService.AdminAuthorization(req)
         if (response.status === 200) {
@@ -90,7 +90,7 @@ router.delete('/:sensorId/property/:propertyName', async (req, res) => {
     }
 })
 
-router.put('/:sensorId', async (req, res) => {
+router.put('/:sensorId', async (req, res, next) => {
     try {
         let response = await authorizationService.AdminAuthorization(req)
         if (response.status === 200) {
@@ -108,7 +108,7 @@ router.put('/:sensorId', async (req, res) => {
     }
 })
 
-router.put('/:sensorId/property/:propertyName', async (req, res) => {
+router.put('/:sensorId/property/:propertyName', async (req, res, next) => {
     try {
         let response = await authorizationService.AdminAuthorization(req)
         if (response.status === 200) {

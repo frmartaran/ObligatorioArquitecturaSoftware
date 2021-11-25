@@ -51,7 +51,7 @@ router.post('/', async (req, res, next) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
     try {
         let response = await authorizationService.AdminAuthorization(req)
         if (response.status === 200) {

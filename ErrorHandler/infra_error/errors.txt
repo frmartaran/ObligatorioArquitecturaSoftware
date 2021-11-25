@@ -1,0 +1,2 @@
+
+ERROR: [APP:Catalog] [Method: Init DB] [ERROR: Access denied for user 'root'@'172.17.0.1' (using password: YES)] [Payload: N/A] [DateTimestamp: 1637844208732]
