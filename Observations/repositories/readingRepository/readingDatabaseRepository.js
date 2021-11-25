@@ -1,21 +1,8 @@
-const Repository = require('./mongoRepository');
-const { handleInfraError } = require('../../ErrorHandler/infra_error');
+const Repository = require('./../mongoRepository');
+const { handleInfraError } = require('../../../ErrorHandler/infra_error');
 const prefixMethod = "mongoDB";
 
-const databaseRepository = {
-    Add: async (data) => {
-        try {
-            const reading = new Repository.Reading(data);
-            return reading.save();
-        } catch (err) {
-            handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Add`, message: err.message, payload: JSON.stringify(data) })
-            throw err;
-        }
-    },
-    AddManyReadings: async (data) => {
-        const reading = Repository.Reading.insertMany(data);
-        return reading;
-    },
+const readingDatabaseRepository = {
     Get: (dateFrom, pageLength) => {
         try {
             let query = Repository.Reading.find({
@@ -219,15 +206,6 @@ const databaseRepository = {
             handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Get Sensor Yearly Readings By Measurement Type`, message: err.message, payload: `StartDate: ${startDate}, EndDate: ${endDate}, MeasurementType: ${measurementType}, ESN: ${ESN}` })
             throw err;
         }
-    },
-    AddDailyReadings: async (data) => {
-        try {
-            const reading = Repository.DailyReading.insertMany(data);
-            return reading;
-        } catch (err) {
-            handleInfraError({ app: process.env.APP_NAME, method: `${prefixMethod}: Add Daily Readings`, message: err.message, payload: JSON.stringify(data) })
-            throw err;
-        }
-    },
+    }
 }
-module.exports = databaseRepository
+module.exports = readingDatabaseRepository

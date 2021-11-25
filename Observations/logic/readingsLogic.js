@@ -1,4 +1,4 @@
-const readingDatabaseService = require('../services/readingDatabaseService');
+const readingDatabaseService = require('../services/readingDatabaseService/readingDatabaseService');
 
 class ReadingsLogic {
     calculateDailyAverage = async (differenceInDays, dateFrom, dateTo, measurementType, ESN, res, next) => {

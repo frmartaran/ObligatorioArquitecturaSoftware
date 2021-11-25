@@ -1,10 +1,6 @@
-const databaseRepository = require('../repositories/databaseRepository');
+const databaseRepository = require('../../repositories/readingRepository/readingDatabaseRepository');
 
-const databaseService = {
-    Add: async (data) => {
-        let newSensorReading = await databaseRepository.Add(data);
-        return newSensorReading;
-    },
+const readingDatabaseService = {
     Get: async (dateFrom, pageLength) => {
         let query = await databaseRepository.Get(dateFrom, pageLength);
         return query;
@@ -40,10 +36,6 @@ const databaseService = {
     GetSensorYearlyReadingsByMeasurementType: async (startDate, endDate, measurementType, ESN) => {
         let query = await databaseRepository.GetSensorYearlyReadingsByMeasurementType(startDate, endDate, measurementType, ESN);
         return query;
-    },
-    AddDailyReadings: async (data) => {
-        let newSensorReading = await databaseRepository.AddDailyReadings(data);
-        return newSensorReading;
     }
 }
-module.exports = databaseService
+module.exports = readingDatabaseService

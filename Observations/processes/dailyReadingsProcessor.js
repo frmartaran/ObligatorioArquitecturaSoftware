@@ -1,4 +1,5 @@
-const readingDatabaseService = require('../services/readingDatabaseService');
+const readingDatabaseService = require('../services/readingDatabaseService/readingDatabaseService');
+const writingDatabaseService = require('../services/writingDatabaseService/writingDatabaseService');
 const {sendEmail} = require('../../Utils/email');
 const prefixMethod = "dailyReadingsProcessor";
 const Config = require('./../config/default.json');
@@ -16,7 +17,7 @@ dailyReadingsProcessor = async (job) => {
             let endDate = yesterday;
             endDate.setUTCHours(23,59,59,999);
             let dailyReadings = await readingDatabaseService.GetDailyReadingsFromRawData(startDate, endDate);
-            await readingDatabaseService.AddDailyReadings(dailyReadings);
+            await writingDatabaseService.AddDailyReadings(dailyReadings);
         } else{
             console.log('promedio ya calculado');
         }

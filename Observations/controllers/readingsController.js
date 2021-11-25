@@ -1,4 +1,4 @@
-const readingDatabaseService = require('../services/readingDatabaseService');
+const readingDatabaseService = require('../services/readingDatabaseService/readingDatabaseService');
 const ReadingsLogic = require('../logic/readingsLogic');
 const Config = require('../config/default.json');
 
