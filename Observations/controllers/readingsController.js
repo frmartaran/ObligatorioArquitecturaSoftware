@@ -25,18 +25,22 @@ module.exports = class ReadingsController {
         let measurementType = req.query.measurementType;
         let differenceInTime = dateTo.getTime() - dateFrom.getTime();
         let differenceInDays = differenceInTime / (1000 * 3600 * 24);
-        switch (averageType) {
-            case Config.averageType.daily:
-                logic.calculateDailyAverage(differenceInDays, dateFrom, dateTo, measurementType, ESN, res, next);
-                break;
-            case Config.averageType.monthly:
-                logic.calculateMonthlyAverage(differenceInDays, dateFrom, dateTo, measurementType, ESN, res, next);
-                break;
-            case Config.averageType.yearly:
-                logic.calculateYearlyAverage(dateFrom, dateTo, measurementType, ESN, res, next)
-                break;
-            default:
-                break;
+        if(differenceInDays < 0){
+            res.send("Error. DateFrom no puede ser menor a DateTo.")
+        }else{
+            switch (averageType) {
+                case Config.averageType.daily:
+                    logic.calculateDailyAverage(differenceInDays, dateFrom, dateTo, measurementType, ESN, res, next);
+                    break;
+                case Config.averageType.monthly:
+                    logic.calculateMonthlyAverage(differenceInDays, dateFrom, dateTo, measurementType, ESN, res, next);
+                    break;
+                case Config.averageType.yearly:
+                    logic.calculateYearlyAverage(dateFrom, dateTo, measurementType, ESN, res, next)
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
