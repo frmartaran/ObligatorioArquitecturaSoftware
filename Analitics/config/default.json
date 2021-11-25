@@ -1,0 +1,13 @@
+
+{
+    "microserviceName": "Analytics",
+    "alarmEmailSubject": "Sensor en alerta!",
+    "alarmEmailText": "Equipo!!,\n se están registrando valores anormales en el par (sensor, propiedad) = ",
+    "validationData": {
+      "name": "pendingValidation",
+      "port": 6379,
+      "host": "localhost",
+      "numberOfProcesses": 4,
+      "processorLocation": "/services/processes/validate/index.js"
+    }
+}

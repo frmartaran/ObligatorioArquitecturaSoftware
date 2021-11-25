@@ -1,0 +1,24 @@
+
+{
+    "sensor": {
+      "ESN": "S1",
+      "name": "Model X",
+      "location": "10000-10000",
+      "properties":[
+        {
+          "name": "temperature",
+          "unit":"F",
+          "minUnitValue": 68,
+          "maxUnitValue": 86
+        },
+        {
+          "name": "atm pressure",
+          "unit":"PAS",
+          "minUnitValue": 506625,
+          "maxUnitValue": 1013250
+        }
+      ]
+    },
+    "latencia":1000,
+    "daysBack": 0
+}

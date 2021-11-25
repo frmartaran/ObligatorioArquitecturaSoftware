@@ -1,0 +1,62 @@
+
+{
+    "database": {
+      "uri": "mongodb://127.0.0.1:27017/test",
+      "options": {
+        "useUnifiedTopology": true,
+        "serverSelectionTimeoutMS": 3600
+      }
+    },
+    "pageLength": 200,
+    "originalWithCatalogProperty": {
+      "name": "originalWithCatalogProperty",
+      "port": 6379,
+      "host": "localhost",
+      "numberOfProcesses": 4,
+      "processorLocation": "/processes/unitTransforamtionFilter/unitTransforamtionFilter.js"
+    },
+    "measurements": {
+      "name": "measurements",
+      "port": 6379,
+      "host": "localhost",
+      "numberOfProcesses": 4,
+      "processorLocation": "/processes/associateOriginalWithCatalogPropertyFilter/associateOriginalWithCatalogPropertyFilter.js"
+    },
+    "filteredData": {
+      "name": "filteredData",
+      "port": 6379,
+      "host": "localhost",
+      "numberOfProcesses": 4,
+      "processorLocation": "/processes/filteredDataProcessor.js"
+    },
+    "dailyReadingsQueue": {
+      "name": "dailyReadingsQueue",
+      "port": 6379,
+      "host": "localhost",
+      "numberOfProcesses": 1,
+      "processorLocation": "/processes/dailyReadingsProcessor.js"
+    },
+    "pendingValidationQueue": {
+      "name": "pendingValidation",
+      "port": 6379,
+      "host": "localhost"
+    },
+    "defaultJobOptions": {
+      "attempts": 3,
+      "backoff": {
+        "type": "fixed",
+        "delay": 1000
+      }
+    },
+    "dailyProcessorCronExpression:": "3 1 * * *",
+    "averageType": {
+      "daily": "DAILY",
+      "monthly": "MONTHLY",
+      "yearly": "YEARLY"
+    },
+    "microserviceName": "Observation",
+    "dailyProcessorFailureEmailSubject": "Falla calculo promedio sensores",
+    "dailyProcessorFailureEmailText": "Equipo!!,\n fallo el proceso diario de precalculo de datos de sensores!",
+    "connectionRefusedEmailSubject": "Falla conexion con mongoDB",
+    "connectionRefusedEmailText": "Equipo!!,\n fallo la conexion con mongoDB! No se estan almacenando datos de sensores! \n Fecha de corrida del proximo precalculo diario: "
+}

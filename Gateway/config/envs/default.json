@@ -1,0 +1,12 @@
+{
+    "REDIS_PORT":6379,
+    "REDIS_HOST":"localhost",
+    "updateSensor": {
+      "name": "updateSensor",
+      "port": 6379,
+      "host": "localhost",
+      "numberOfProcesses": 4,
+      "processorLocation": "/processes/updateCacheProces"
+    },
+    "OBSERVATIONS_QUEUE_NAME":"measurements"
+}
