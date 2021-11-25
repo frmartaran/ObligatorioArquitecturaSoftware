@@ -4,6 +4,8 @@
     "updateSensor": {
       "name": "updateSensor",
       "port": 6379,
-      "host": "localhost"
+      "host": "localhost",
+      "numberOfProcesses": 4,
+      "processorLocation": "/src/processes/updateCacheProces"
     }
 }

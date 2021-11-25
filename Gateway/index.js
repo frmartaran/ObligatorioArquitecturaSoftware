@@ -1,11 +1,10 @@
 //Load config
-require('dotenv').config()
-const queue = require('./src/queues/queue')
-const factory = require('./src/server/factory')
+require('dotenv').config();
+const queue = require('./src/queues/queue');
+const factory = require('./src/server/factory');
+const config = require('./src/config/envs/default.json');
 
 console.log(process.env.PORT)
-
-const updateCacheProces = require('./src/processes/updateCacheProces')
 
 const serverKey = process.env.SERVER.toString()
 if(serverKey){
@@ -15,4 +14,4 @@ if(serverKey){
     console.log('no serverKey in env')
 }
 
-queue.updateSensor.process(8, updateCacheProces);
+queue.updateSensor.process(config.updateSensor.numberOfProcesses, __dirname + config.updateSensor.processorLocation);

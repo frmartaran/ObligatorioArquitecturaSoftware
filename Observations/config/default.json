@@ -11,27 +11,30 @@
     "originalWithCatalogProperty": {
       "name": "originalWithCatalogProperty",
       "port": 6379,
-      "host": "localhost"
+      "host": "localhost",
+      "numberOfProcesses": 4,
+      "processorLocation": "/processes/unitTransforamtionFilter/unitTransforamtionFilter.js"
     },
     "measurements": {
       "name": "measurements",
       "port": 6379,
-      "host": "localhost"
+      "host": "localhost",
+      "numberOfProcesses": 4,
+      "processorLocation": "/processes/associateOriginalWithCatalogPropertyFilter/associateOriginalWithCatalogPropertyFilter.js"
     },
     "filteredData": {
       "name": "filteredData",
       "port": 6379,
-      "host": "localhost"
-    },
-    "incomingReadingData": {
-      "name": "incomingReadingData",
-      "port": 6379,
-      "host": "localhost"
+      "host": "localhost",
+      "numberOfProcesses": 4,
+      "processorLocation": "/processes/filteredDataProcessor.js"
     },
     "dailyReadingsQueue": {
       "name": "dailyReadingsQueue",
       "port": 6379,
-      "host": "localhost"
+      "host": "localhost",
+      "numberOfProcesses": 1,
+      "processorLocation": "/processes/dailyReadingsProcessor.js"
     },
     "pendingValidationQueue": {
       "name": "pendingValidation",
